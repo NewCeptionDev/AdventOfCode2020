@@ -8,7 +8,8 @@ The Programming Language used is ***Java***.
 
 
 
-#### Run locally
-You need to checkout the Repository and add your Input as a *.txt* to the *Inputs*-Folder.
+## Run locally
+
+You need to check out the Repository and add your Input as a *.txt* to the *Inputs*-Folder.
 After that edit the ***fileName*** Variable in the Day you want to run and use the *main* Method within that Day to run it.
 Your Outputs should be printed to the Console.
