@@ -17,6 +17,12 @@ public class Day2 {
         System.out.println("Task 2: " + task2(inputs));
     }
 
+    /**
+     * Task 1
+     *
+     * @param inputs List of String
+     * @return Count of valid Passwords regarding the Requirements of Task 1
+     */
     public int task1(List<String> inputs){
         int validPasswords = 0;
 
@@ -31,6 +37,12 @@ public class Day2 {
         return validPasswords;
     }
 
+    /**
+     * Task 2
+     *
+     * @param inputs List of String
+     * @return Count of valid Passwords regarding the Requirements of Task 2
+     */
     public int task2(List<String> inputs){
         int validPasswords = 0;
 
