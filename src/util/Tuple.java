@@ -1,4 +1,4 @@
-package day1;
+package util;
 
 public class Tuple<T, F> {
 
