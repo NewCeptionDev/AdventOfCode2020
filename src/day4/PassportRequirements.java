@@ -1,6 +1,6 @@
 package day4;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * Constants for the Requirement of Task 2
@@ -17,6 +17,6 @@ public class PassportRequirements {
     public static final int HEIGHT_IMPERIAL_LOWER = 59;
     public static final int HEIGHT_IMPERIAL_UPPER = 76;
     public static final int HAIR_COLOR_CODE_LENGTH = 6;
-    public static final List<String> EYE_COLORS = List.of("amb", "blu", "brn", "gry", "grn", "hzl", "oth");
+    public static final Set<String> EYE_COLORS = Set.of("amb", "blu", "brn", "gry", "grn", "hzl", "oth");
     public static final int PASSPORT_ID_LENGTH = 9;
 }

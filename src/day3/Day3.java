@@ -25,7 +25,7 @@ public class Day3 {
      * @param inputs List of String
      * @return Number of Encounters with Trees when moving 3 on horizontal and 1 on vertical Axis
      */
-    public long task1(List<String> inputs) {
+    public long task1(final List<String> inputs) {
         return getEncounters(inputs, 3, 1);
     }
 
@@ -35,7 +35,7 @@ public class Day3 {
      * @param inputs List of String
      * @return Multiplication of Encounters with Trees on 5 different Slopes
      */
-    public long task2(List<String> inputs) {
+    public long task2(final List<String> inputs) {
         long firstSlopeEncounters = getEncounters(inputs, 1, 1);
         long secondSlopeEncounters = getEncounters(inputs, 3, 1);
         long thirdSlopeEncounters = getEncounters(inputs, 5, 1);
@@ -53,7 +53,7 @@ public class Day3 {
      * @param verticalMovement The Movement on the vertical Axis
      * @return Number of Encounters with Trees
      */
-    private long getEncounters(List<String> inputs, int horizontalMovement, int verticalMovement) {
+    private long getEncounters(final List<String> inputs, final int horizontalMovement, final int verticalMovement) {
         final int partWidth = inputs.get(0).length();
         final int height = inputs.size();
 

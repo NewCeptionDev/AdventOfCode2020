@@ -23,7 +23,7 @@ public class Day2 {
      * @param inputs List of String
      * @return Count of valid Passwords regarding the Requirements of Task 1
      */
-    public int task1(List<String> inputs){
+    public int task1(final List<String> inputs){
         int validPasswords = 0;
 
         for(String input : inputs){
@@ -43,7 +43,7 @@ public class Day2 {
      * @param inputs List of String
      * @return Count of valid Passwords regarding the Requirements of Task 2
      */
-    public int task2(List<String> inputs){
+    public int task2(final List<String> inputs){
         int validPasswords = 0;
 
         for(String input : inputs){
@@ -63,7 +63,7 @@ public class Day2 {
      * @param input String that should be parsed
      * @return ParsedInput
      */
-    private ParsedInput parseInput(String input){
+    private ParsedInput parseInput(final String input){
         //Using Split as I do not need to worry about the Letter Counts with this
         String[] informationPasswordSplit = input.split(":");
         String[] rangeLetterSplit = informationPasswordSplit[0].split(" ");

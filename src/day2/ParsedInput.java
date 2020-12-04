@@ -10,7 +10,7 @@ public class ParsedInput {
     private final int firstPosition;
     private final int secondPosition;
 
-    public ParsedInput(String password, char requiredCharacter, int firstPosition, int secondPosition) {
+    public ParsedInput(final String password, final char requiredCharacter, final int firstPosition, final int secondPosition) {
         this.password = password;
         this.requiredCharacter = requiredCharacter;
         this.firstPosition = firstPosition;

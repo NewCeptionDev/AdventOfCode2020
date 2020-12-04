@@ -19,7 +19,7 @@ public class Passport {
      *
      * @param passportInput String containing Passport Attributes
      */
-    public Passport(String passportInput) {
+    public Passport(final String passportInput) {
         this.parseAttributes(passportInput);
     }
 
@@ -46,7 +46,7 @@ public class Passport {
      *
      * @param input String
      */
-    private void parseAttributes(String input) {
+    private void parseAttributes(final String input) {
         String[] attributes = input.split(" ");
 
         for (String attribute : attributes) {
@@ -62,7 +62,7 @@ public class Passport {
      * @param key Attribute
      * @param value Value
      */
-    private void mapInputToCorrectAttribute(String key, String value) {
+    private void mapInputToCorrectAttribute(final String key, final String value) {
         switch (key) {
             case "byr":
                 this.birthYear = value;
@@ -94,7 +94,7 @@ public class Passport {
      * @param input Input
      * @return Integer or null
      */
-    private Integer parseStringToInteger(String input){
+    private Integer parseStringToInteger(final String input){
         try {
             return Integer.parseInt(input);
         } catch (Exception ignored){
@@ -193,7 +193,7 @@ public class Passport {
      * @param height Input Height
      * @return Tuple with Height and Unit or null if there is no correct Unit
      */
-    private Tuple<String, String> parseHeightIfPossible(String height){
+    private Tuple<String, String> parseHeightIfPossible(final String height){
         if(height != null && height.length() >=4){
             String possibleUnit = height.substring(height.length() - 2);
 
@@ -212,7 +212,7 @@ public class Passport {
      * @param unit Unit of the Height
      * @return True if Height is within the Requirements for the given Unit
      */
-    private boolean heightWithinBordersOfUnit(Integer height, String unit){
+    private boolean heightWithinBordersOfUnit(final Integer height, final String unit){
         switch (unit){
             case "cm":
                 return height >= HEIGHT_METRIC_LOWER && height <= HEIGHT_METRIC_UPPER;

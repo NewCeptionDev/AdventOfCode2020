@@ -25,7 +25,7 @@ public class Day4 {
      * @param inputs List of String
      * @return Number of valid Passports regarding the Requirements of Task 1
      */
-    public long task1(List<String> inputs) {
+    public long task1(final List<String> inputs) {
         List<Passport> passports = mapInputToPassports(inputs);
 
         return passports.stream().filter(Passport::isValidForTask1).count();
@@ -37,7 +37,7 @@ public class Day4 {
      * @param inputs List of String
      * @return Number of valid Passports regarding the Requirements of Task 2
      */
-    public long task2(List<String> inputs) {
+    public long task2(final List<String> inputs) {
 
         List<Passport> passports = mapInputToPassports(inputs);
 
@@ -50,7 +50,7 @@ public class Day4 {
      * @param inputs List of String
      * @return List of Passports
      */
-    private List<Passport> mapInputToPassports(List<String> inputs) {
+    private List<Passport> mapInputToPassports(final List<String> inputs) {
         List<String> passportStrings = separatePassportInputs(inputs);
 
         return passportStrings.stream().map(Passport::new).collect(Collectors.toList());
@@ -62,7 +62,7 @@ public class Day4 {
      * @param inputs List of String with each String being one Line from the Inputfile
      * @return List of String with each String containing all Information about one Passport
      */
-    private List<String> separatePassportInputs(List<String> inputs) {
+    private List<String> separatePassportInputs(final List<String> inputs) {
         List<String> passportInputs = new ArrayList<>();
 
         StringBuilder currentPassportInput = new StringBuilder();

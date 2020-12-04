@@ -30,7 +30,7 @@ public class Day1 {
      * @return Product of two Numbers which Sum is equal to searchedNumber
      *         -1 if no Pair of Numbers is found
      */
-    public Integer task1(List<String> inputs) {
+    public Integer task1(final List<String> inputs) {
         HashSet<Integer> lowerThanOrEqualHalf = new HashSet<>();
         HashSet<Integer> higherThanHalf = new HashSet<>();
 
@@ -62,7 +62,7 @@ public class Day1 {
      * @return Product of three Numbers which Sum is equal to searchedNumber
      *         -1 if there is no Combination of numbers
      */
-    public Integer task2(List<String> inputs) {
+    public Integer task2(final List<String> inputs) {
         HashSet<Integer> lowerThanOrEqualHalf = new HashSet<>();
         HashSet<Integer> higherThanHalf = new HashSet<>();
 
@@ -94,7 +94,7 @@ public class Day1 {
      * @return Tuple with two Integers which Sum is equal to sumOfNumbers
      *          Null if there is no Combination
      */
-    private Tuple<Integer, Integer> searchForSecondElement(Set<Integer> smallerSet, Set<Integer> largerSet, Integer sumOfNumbers) {
+    private Tuple<Integer, Integer> searchForSecondElement(final Set<Integer> smallerSet, final Set<Integer> largerSet, final Integer sumOfNumbers) {
         for (int currentElement : smallerSet) {
             int missingPiece = sumOfNumbers - currentElement;
 
@@ -114,7 +114,7 @@ public class Day1 {
      * @return Tuple with an Integer and a Tuple of two Integers which Sum is equal to the searchesNumber
      *         Null if there is no Combination
      */
-    private Tuple<Integer, Tuple<Integer, Integer>> searchForSecondAndThirdElement(Set<Integer> smallerSet, Set<Integer> largerSet) {
+    private Tuple<Integer, Tuple<Integer, Integer>> searchForSecondAndThirdElement(final Set<Integer> smallerSet, final Set<Integer> largerSet) {
         for (int currentElement : smallerSet) {
             int searchedSumOfRemainingNumbers = searchedNumber - currentElement;
 
@@ -137,7 +137,7 @@ public class Day1 {
      * @param toRemove Element to be removed
      * @return Modified Version of input
      */
-    private HashSet<Integer> createModifiedSet(Set<Integer> input, Integer toRemove) {
+    private HashSet<Integer> createModifiedSet(final Set<Integer> input, final Integer toRemove) {
         HashSet<Integer> modifiedSet = new HashSet<>(input);
         modifiedSet.remove(toRemove);
 
@@ -151,7 +151,7 @@ public class Day1 {
      * @param lowerThanEqual Set of all Integer in the List that are less or equal to the Half of the searchedNumber
      * @param higher         Set of all Integer in the List that are higher than Half of the searchedNumber
      */
-    private void sortInputs(List<String> inputs, Set<Integer> lowerThanEqual, Set<Integer> higher) {
+    private void sortInputs(final List<String> inputs, Set<Integer> lowerThanEqual, Set<Integer> higher) {
         for (String input : inputs) {
             int parsedInput = Integer.parseInt(input);
 
