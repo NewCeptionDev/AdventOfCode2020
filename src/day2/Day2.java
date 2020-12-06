@@ -6,12 +6,14 @@ import java.util.List;
 
 public class Day2 {
 
+    public static final String fileName = "day2Task1Input";
+
     public static void main(String[] args) {
         new Day2();
     }
 
     public Day2() {
-        List<String> inputs = FileUtil.readFileAsListOfLines("day2Task1Input");
+        List<String> inputs = FileUtil.readFileAsListOfLines(fileName);
 
         System.out.println("Task 1: " + task1(inputs));
         System.out.println("Task 2: " + task2(inputs));

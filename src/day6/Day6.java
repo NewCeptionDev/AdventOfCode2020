@@ -8,12 +8,14 @@ import java.util.Set;
 
 public class Day6 {
 
+    public static final String fileName = "day6Task1Input";
+
     public static void main(String[] args) {
         new Day6();
     }
 
     public Day6() {
-        List<String> inputs = FileUtil.readFileAsListOfLines("day6Task1Input");
+        List<String> inputs = FileUtil.readFileAsListOfLines(fileName);
 
         System.out.println("Task 1: " + task1(inputs));
         System.out.println("Task 2: " + task2(inputs));

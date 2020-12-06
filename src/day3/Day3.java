@@ -6,6 +6,7 @@ import java.util.List;
 
 public class Day3 {
 
+    public static final String fileName = "day3Task1Input";
     private final char TREE = '#';
 
     public static void main(String[] args) {
@@ -13,7 +14,7 @@ public class Day3 {
     }
 
     public Day3() {
-        List<String> inputs = FileUtil.readFileAsListOfLines("day3Task1Input");
+        List<String> inputs = FileUtil.readFileAsListOfLines(fileName);
 
         System.out.println("Task 1: " + task1(inputs));
         System.out.println("Task 2: " + task2(inputs));
