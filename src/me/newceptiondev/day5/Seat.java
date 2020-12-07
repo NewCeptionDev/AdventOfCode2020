@@ -1,4 +1,4 @@
-package day5;
+package me.newceptiondev.day5;
 
 import java.util.List;
 import java.util.stream.Collectors;

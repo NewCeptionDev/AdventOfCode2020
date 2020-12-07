@@ -1,4 +1,4 @@
-package day4;
+package me.newceptiondev.day4;
 
 import java.util.Set;
 

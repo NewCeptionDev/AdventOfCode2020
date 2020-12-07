@@ -1,4 +1,4 @@
-package util;
+package me.newceptiondev.util;
 
 import java.io.IOException;
 import java.nio.file.Files;

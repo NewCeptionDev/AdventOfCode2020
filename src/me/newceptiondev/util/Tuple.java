@@ -1,4 +1,4 @@
-package util;
+package me.newceptiondev.util;
 
 public class Tuple<T, F> {
 

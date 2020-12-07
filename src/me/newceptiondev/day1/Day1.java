@@ -1,7 +1,7 @@
-package day1;
+package me.newceptiondev.day1;
 
-import util.FileUtil;
-import util.Tuple;
+import me.newceptiondev.util.FileUtil;
+import me.newceptiondev.util.Tuple;
 
 import java.util.HashSet;
 import java.util.List;
@@ -13,12 +13,15 @@ public class Day1 {
     private static final Integer searchedNumber = 2020;
 
     public static void main(String[] args) {
-        new Day1();
+        List<String> inputs = FileUtil.readFileAsListOfLines(fileName);
+
+        new Day1(inputs);
     }
 
     public Day1() {
-        List<String> inputs = FileUtil.readFileAsListOfLines(fileName);
+    }
 
+    public Day1(List<String> inputs) {
         System.out.println("Task 1: " + task1(inputs));
         System.out.println("Task 2: " + task2(inputs));
     }

@@ -1,4 +1,4 @@
-package day6;
+package me.newceptiondev.day6;
 
 import java.util.HashSet;
 import java.util.List;

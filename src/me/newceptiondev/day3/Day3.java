@@ -1,6 +1,6 @@
-package day3;
+package me.newceptiondev.day3;
 
-import util.FileUtil;
+import me.newceptiondev.util.FileUtil;
 
 import java.util.List;
 
@@ -10,12 +10,15 @@ public class Day3 {
     private final char TREE = '#';
 
     public static void main(String[] args) {
-        new Day3();
+        List<String> inputs = FileUtil.readFileAsListOfLines(fileName);
+
+        new Day3(inputs);
     }
 
     public Day3() {
-        List<String> inputs = FileUtil.readFileAsListOfLines(fileName);
+    }
 
+    public Day3(List<String> inputs) {
         System.out.println("Task 1: " + task1(inputs));
         System.out.println("Task 2: " + task2(inputs));
     }

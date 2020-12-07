@@ -1,8 +1,8 @@
-package day4;
+package me.newceptiondev.day4;
 
-import util.Tuple;
+import me.newceptiondev.util.Tuple;
 
-import static day4.PassportRequirements.*;
+import static me.newceptiondev.day4.PassportRequirements.*;
 
 public class Passport {
 

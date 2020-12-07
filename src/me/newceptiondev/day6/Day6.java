@@ -1,6 +1,6 @@
-package day6;
+package me.newceptiondev.day6;
 
-import util.FileUtil;
+import me.newceptiondev.util.FileUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,12 +11,15 @@ public class Day6 {
     public static final String fileName = "day6Task1Input";
 
     public static void main(String[] args) {
-        new Day6();
-    }
-
-    public Day6() {
         List<String> inputs = FileUtil.readFileAsListOfLines(fileName);
 
+        new Day6(inputs);
+    }
+
+    public Day6(){
+    }
+
+    public Day6(List<String> inputs) {
         System.out.println("Task 1: " + task1(inputs));
         System.out.println("Task 2: " + task2(inputs));
     }
