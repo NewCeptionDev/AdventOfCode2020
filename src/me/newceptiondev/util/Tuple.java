@@ -17,4 +17,12 @@ public class Tuple<T, F> {
     public F getY() {
         return y;
     }
+
+    @Override
+    public String toString() {
+        return "Tuple{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
+    }
 }
