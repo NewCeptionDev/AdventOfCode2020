@@ -30,7 +30,7 @@ public class Day10 {
      * @param inputs List of String
      * @return Product of 1-Difference and 3-Difference
      */
-    public int task1(List<String> inputs) {
+    public int task1(final List<String> inputs) {
         List<Integer> jolts = inputs.stream().map(Integer::parseInt).collect(Collectors.toList());
         List<Integer> joltsSorted = jolts.stream().sorted().collect(Collectors.toList());
         joltsSorted.add(0, 0);
@@ -58,39 +58,71 @@ public class Day10 {
      * @param inputs List of String
      * @return Number of distinct Arrangements that connect the Device to the Charging Outlet
      */
-    public int task2(List<String> inputs) {
+    public long task2(final List<String> inputs) {
         List<Integer> jolts = inputs.stream().map(Integer::parseInt).collect(Collectors.toList());
         List<Integer> joltsSorted = jolts.stream().sorted().collect(Collectors.toList());
         joltsSorted.add(0, 0);
         joltsSorted.add(joltsSorted.size(), joltsSorted.get(joltsSorted.size() - 1) + 3);
 
-        //TODO Count all Possibilites between two 3 Jumps and Multiply them
+        List<List<Integer>> splitByThreeJoltJumps = splitByThreeJoltJumps(joltsSorted);
 
-        return returnDistinctArrangements(joltsSorted);
+        return splitByThreeJoltJumps.stream().map(this::returnDistinctArrangements).filter(integer -> integer != 0).map(integer -> (long) integer).reduce(1L, (integer, integer2) -> integer * integer2);
     }
 
-    private int returnDistinctArrangements(List<Integer> jolts) {
-        int possibleSolutions = 0;
+    /**
+     * Splits the List of Integer into multiple Lists
+     * Integer are split when the Difference between two Integer is 3
+     *
+     * @param joltsSorted List of Integer
+     * @return List of List of Integer
+     */
+    private List<List<Integer>> splitByThreeJoltJumps(final List<Integer> joltsSorted) {
+        List<List<Integer>> splitList = new ArrayList<>();
 
-        if (jolts.contains(jolts.get(0) + 1)) {
-            List<Integer> modifiedList = new ArrayList<>(jolts.subList(jolts.indexOf(jolts.get(0) + 1), jolts.size()));
+        List<Integer> currentList = new ArrayList<>();
 
-            possibleSolutions += returnDistinctArrangements(modifiedList);
+        for (int i = 0; i < joltsSorted.size() - 1; i++) {
+            int distance = joltsSorted.get(i + 1) - joltsSorted.get(i);
+
+            currentList.add(joltsSorted.get(i));
+
+            if (distance == 3) {
+                splitList.add(currentList);
+                currentList = new ArrayList<>();
+            }
         }
 
-        if (jolts.contains(jolts.get(0) + 2)) {
-            List<Integer> modifiedList = new ArrayList<>(jolts.subList(jolts.indexOf(jolts.get(0) + 2), jolts.size()));
+        currentList.add(joltsSorted.get(joltsSorted.size() - 1));
+        splitList.add(currentList);
 
-            possibleSolutions += returnDistinctArrangements(modifiedList);
-        }
-
-        if (jolts.contains(jolts.get(0) + 3)) {
-            List<Integer> modifiedList = new ArrayList<>(jolts.subList(jolts.indexOf(jolts.get(0) + 3), jolts.size()));
-
-            possibleSolutions += returnDistinctArrangements(modifiedList);
-        }
-
-        return possibleSolutions;
+        return splitList;
     }
 
+    /**
+     * Calculates and counts all distinct Ways to traverse the List
+     *
+     * @param jolts List of Integer
+     * @return Count of distinct Ways
+     */
+    private int returnDistinctArrangements(final List<Integer> jolts) {
+        int possibilities = 0;
+
+        if(jolts.size() == 1){
+            return 1;
+        }
+
+        if(jolts.size() > 1){
+            possibilities += returnDistinctArrangements(jolts.subList(1, jolts.size()));
+        }
+
+        if(jolts.size() > 2 && jolts.get(2) - jolts.get(0) <= 3){
+            possibilities += returnDistinctArrangements(jolts.subList(2, jolts.size()));
+        }
+
+        if(jolts.size() > 3 && jolts.get(3) - jolts.get(0) <= 3) {
+            possibilities += returnDistinctArrangements(jolts.subList(3, jolts.size()));
+        }
+
+        return possibilities;
+    }
 }
