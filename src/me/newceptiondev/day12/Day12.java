@@ -28,9 +28,9 @@ public class Day12 {
      * Task 1
      *
      * @param inputs List of String
-     * @return Manhattan distance between starting position and current Position
+     * @return Manhattan distance between starting position and current Position with Instruction Set of Task 1
      */
-    public int task1(List<String> inputs) {
+    public int task1(final List<String> inputs) {
         List<Instruction> instructions = inputs.stream().map(Instruction::new).collect(Collectors.toList());
 
         Position currentPosition = new Position(0, 0, Direction.EAST);
@@ -46,9 +46,9 @@ public class Day12 {
      * Task 2
      *
      * @param inputs List of String
-     * @return
+     * @return Manhattan distance between starting position and current Position with Instruction Set of Task 2
      */
-    public int task2(List<String> inputs) {
+    public int task2(final List<String> inputs) {
         List<Instruction> instructions = inputs.stream().map(Instruction::new).collect(Collectors.toList());
 
         Position currentPosition = new Position(0, 0, new Tuple<>(10, 1));

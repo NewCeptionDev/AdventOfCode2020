@@ -9,13 +9,27 @@ public class Position {
     private Direction direction;
     private Tuple<Integer, Integer> waypoint;
 
-    public Position(int east, int north, Direction direction){
+    /**
+     * Creates a Position with east, north and a Direction
+     *
+     * @param east East Value
+     * @param north North Value
+     * @param direction Direction
+     */
+    public Position(final int east, final int north, final Direction direction){
         this.east = east;
         this.north = north;
         this.direction = direction;
     }
 
-    public Position(int east, int north, Tuple<Integer, Integer> waypoint){
+    /**
+     * Creates a Position with east, north and a Waypoint
+     *
+     * @param east East Value
+     * @param north North Value
+     * @param waypoint Waypoint
+     */
+    public Position(final int east, final int north, final Tuple<Integer, Integer> waypoint){
         this.east = east;
         this.north = north;
         this.waypoint = waypoint;
@@ -37,17 +51,12 @@ public class Position {
         return waypoint;
     }
 
+    /**
+     * Calculates the Manhattan Distance between east, north and 0,0
+     *
+     * @return Manhattan Distance
+     */
     public int calculateManhattanPositionToZero(){
         return Math.abs(this.east) + Math.abs(this.north);
-    }
-
-    @Override
-    public String toString() {
-        return "Position{" +
-                "east=" + east +
-                ", north=" + north +
-                ", direction=" + direction +
-                ", waypoint=" + waypoint +
-                '}';
     }
 }

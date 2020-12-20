@@ -7,12 +7,23 @@ public class Instruction {
     private final Action action;
     private final int value;
 
-    public Instruction(String code) {
+    /**
+     * Creates an Instruction from a String
+     *
+     * @param code String describing Instruction
+     */
+    public Instruction(final String code) {
         this.action = parseAction(code.charAt(0));
         this.value = Integer.parseInt(code.substring(1));
     }
 
-    private Action parseAction(char actionChar) {
+    /**
+     * Parses the Action from a char
+     *
+     * @param actionChar Char describing Action
+     * @return Action described by Char
+     */
+    private Action parseAction(final char actionChar) {
         switch (actionChar) {
             case 'N':
                 return Action.NORTH;
@@ -34,7 +45,13 @@ public class Instruction {
         return null;
     }
 
-    public Position applyInstructionForTask1(Position currentPosition) {
+    /**
+     * Applies the Instruction to the given Position according to the Instruction Set of Task 1
+     *
+     * @param currentPosition Position Current Position
+     * @return Position after Instruction
+     */
+    public Position applyInstructionForTask1(final Position currentPosition) {
 
         switch (this.action) {
             case LEFT:
@@ -42,22 +59,28 @@ public class Instruction {
                 return new Position(currentPosition.getEast(), currentPosition.getNorth(),
                         turnShip(currentPosition.getDirection()));
             case FORWARD:
-                return driveTowardsDirection(currentPosition, currentPosition.getDirection());
+                return moveTowardsDirection(currentPosition, currentPosition.getDirection());
             case NORTH:
-                return driveTowardsDirection(currentPosition, Direction.NORTH);
+                return moveTowardsDirection(currentPosition, Direction.NORTH);
             case EAST:
-                return driveTowardsDirection(currentPosition, Direction.EAST);
+                return moveTowardsDirection(currentPosition, Direction.EAST);
             case WEST:
-                return driveTowardsDirection(currentPosition, Direction.WEST);
+                return moveTowardsDirection(currentPosition, Direction.WEST);
             case SOUTH:
-                return driveTowardsDirection(currentPosition, Direction.SOUTH);
+                return moveTowardsDirection(currentPosition, Direction.SOUTH);
         }
 
         System.err.println("There was an Error parsing the Action");
         return null;
     }
 
-    public Position applyInstructionForTask2(Position currentPosition) {
+    /**
+     * Applies the Instruction to the given Position according to the Instruction Set of Task 2
+     *
+     * @param currentPosition Position Current Position
+     * @return Position after Instruction
+     */
+    public Position applyInstructionForTask2(final Position currentPosition) {
 
         switch (this.action) {
             case LEFT:
@@ -65,7 +88,7 @@ public class Instruction {
                 return new Position(currentPosition.getEast(), currentPosition.getNorth(),
                         rotateWaypoint(currentPosition.getWaypoint()));
             case FORWARD:
-                return driveTowardsWaypoint(currentPosition);
+                return moveTowardsWaypoint(currentPosition);
             case NORTH:
                 return new Position(currentPosition.getEast(), currentPosition.getNorth(),
                         moveWaypoint(currentPosition.getWaypoint(), Direction.NORTH));
@@ -84,7 +107,13 @@ public class Instruction {
         return null;
     }
 
-    private Direction turnShip(Direction currentDirection) {
+    /**
+     * Turns the Ship by the given Direction
+     *
+     * @param currentDirection Direction
+     * @return New Direction of Shop
+     */
+    private Direction turnShip(final Direction currentDirection) {
 
         int directionChange = 0;
 
@@ -108,7 +137,14 @@ public class Instruction {
         return Direction.values()[newDirection];
     }
 
-    private Position driveTowardsDirection(Position currentPosition, Direction direction) {
+    /**
+     * Moves the Ship towards the given Direction
+     *
+     * @param currentPosition Position Current Position
+     * @param direction Direction to move towards
+     * @return New Position of Ship
+     */
+    private Position moveTowardsDirection(final Position currentPosition, final Direction direction) {
 
         switch (direction) {
             case NORTH:
@@ -129,39 +165,58 @@ public class Instruction {
         return null;
     }
 
-    private Tuple<Integer, Integer> rotateWaypoint(Tuple<Integer, Integer> wayPointDistance) {
+    /**
+     * Rotates the given Waypoint
+     *
+     * @param waypoint Given Waypoint
+     * @return New Waypoint
+     */
+    private Tuple<Integer, Integer> rotateWaypoint(final Tuple<Integer, Integer> waypoint) {
 
         if (this.action == Action.LEFT) {
             if (this.value == 90) {
-                return new Tuple<>(-1 * wayPointDistance.getY(), wayPointDistance.getX());
+                return new Tuple<>(-1 * waypoint.getY(), waypoint.getX());
             } else if (this.value == 180) {
-                return new Tuple<>(wayPointDistance.getX(), -1 * wayPointDistance.getY());
+                return new Tuple<>(-1 * waypoint.getX(), -1 * waypoint.getY());
             } else if (this.value == 270) {
-                return new Tuple<>(wayPointDistance.getY(), -1 * wayPointDistance.getX());
+                return new Tuple<>(waypoint.getY(), -1 * waypoint.getX());
             } else {
-                return wayPointDistance;
+                return waypoint;
             }
         } else {
             if (this.value == 90) {
-                return new Tuple<>(wayPointDistance.getY(), -1 * wayPointDistance.getX());
+                return new Tuple<>(waypoint.getY(), -1 * waypoint.getX());
             } else if (this.value == 180) {
-                return new Tuple<>(wayPointDistance.getX(), -1 * wayPointDistance.getY());
+                return new Tuple<>(-1 * waypoint.getX(), -1 * waypoint.getY());
             } else if (this.value == 270) {
-                return new Tuple<>(-1 * wayPointDistance.getY(), wayPointDistance.getX());
+                return new Tuple<>(-1 * waypoint.getY(), waypoint.getX());
             } else {
-                return wayPointDistance;
+                return waypoint;
             }
         }
     }
 
-    private Position driveTowardsWaypoint(Position currentPosition) {
+    /**
+     * Moves the Ship towards the Waypoint
+     *
+     * @param currentPosition Position Current Position
+     * @return New Position after moving
+     */
+    private Position moveTowardsWaypoint(final Position currentPosition) {
         return new Position(
                 currentPosition.getEast() + (this.value * currentPosition.getWaypoint().getX()),
                 currentPosition.getNorth() + (this.value * currentPosition.getWaypoint().getY()),
                 currentPosition.getWaypoint());
     }
 
-    private Tuple<Integer, Integer> moveWaypoint(Tuple<Integer, Integer> waypoint, Direction direction) {
+    /**
+     * Moves the given Waypoint in the given Direction
+     *
+     * @param waypoint Waypoint Current Waypoint
+     * @param direction Direction to move towards
+     * @return New Waypoint
+     */
+    private Tuple<Integer, Integer> moveWaypoint(final Tuple<Integer, Integer> waypoint, final Direction direction) {
         switch (direction) {
             case NORTH:
                 return new Tuple<>(waypoint.getX(), waypoint.getY() + this.value);
