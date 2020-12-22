@@ -7,7 +7,12 @@ public class Food {
     private Set<String> ingredients = new HashSet<>();
     private Set<String> allergens = new HashSet<>();
 
-    public Food(String description) {
+    /**
+     * Creates a Food from the description
+     *
+     * @param description Description of Food
+     */
+    public Food(final String description) {
         String[] ingredientsAndAllergensSplit = description.split("\\(");
 
         this.ingredients = parseIngredients(ingredientsAndAllergensSplit[0].trim());
@@ -18,13 +23,25 @@ public class Food {
         }
     }
 
-    private Set<String> parseIngredients(String ingredientString) {
+    /**
+     * Parses the Ingredients
+     *
+     * @param ingredientString String containing all Ingredients
+     * @return Set of Ingredients
+     */
+    private Set<String> parseIngredients(final String ingredientString) {
         String[] ingredients = ingredientString.split(" ");
 
         return new HashSet<>(Arrays.asList(ingredients.clone()));
     }
 
-    private Set<String> parseAllergens(String allergenString) {
+    /**
+     * Parses the Allergens
+     *
+     * @param allergenString String containing all Allergens
+     * @return Set of Allergens
+     */
+    private Set<String> parseAllergens(final String allergenString) {
         String[] allergens = allergenString.split(", ");
 
         return new HashSet<>(Arrays.asList(allergens.clone()));

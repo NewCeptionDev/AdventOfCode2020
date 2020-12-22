@@ -6,20 +6,22 @@ import java.util.*;
 
 public class Day19 {
 
-    public static final String fileName = "day19Task1Input";
+    public static final String fileNameTask1 = "day19Task1Input";
+    public static final String fileNameTask2 = "day19Task2Input";
 
     public static void main(String[] args) {
-        List<String> inputs = FileUtil.readFileAsListOfLines(fileName);
+        List<String> inputsTask1 = FileUtil.readFileAsListOfLines(fileNameTask1);
+        List<String> inputsTask2 = FileUtil.readFileAsListOfLines(fileNameTask2);
 
-        new Day19(inputs);
+        new Day19(inputsTask1, inputsTask2);
     }
 
     public Day19() {
     }
 
-    public Day19(List<String> inputs) {
-        System.out.println("Task 1: " + task1(inputs));
-        System.out.println("Task 2: " + task2(inputs));
+    public Day19(List<String> inputsTask1, List<String> inputsTask2) {
+        System.out.println("Task 1: " + task1(inputsTask1));
+        System.out.println("Task 2: " + task2(inputsTask2));
     }
 
     /**
@@ -47,9 +49,9 @@ public class Day19 {
             }
         }
 
-        Set<String> validWords = rules.get(0).buildPossibleLiterals(rules);
+        String regex = "^" + rules.get(0).buildRegex(rules) + "$";
 
-        return words.stream().filter(validWords::contains).count();
+        return words.stream().filter(s -> s.matches(regex)).count();
     }
 
     /**
@@ -58,7 +60,27 @@ public class Day19 {
      * @param inputs List of String
      * @return
      */
-    public int task2(List<String> inputs) {
-        return 0;
+    public long task2(List<String> inputs) {
+        Map<Integer, Rule> rules = new HashMap<>();
+        List<String> words = new ArrayList<>();
+
+        boolean ruleParsing = true;
+
+        for(String input : inputs){
+            if(input.equals("")){
+                ruleParsing = false;
+            }
+
+            if(ruleParsing){
+                Rule rule = new Rule(input);
+                rules.put(rule.getId(), rule);
+            } else {
+                words.add(input);
+            }
+        }
+
+        String regex = "^" + rules.get(0).buildRegex(rules) + "$";
+
+        return words.stream().filter(s -> s.matches(regex)).count();
     }
 }

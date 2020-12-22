@@ -62,7 +62,7 @@ public class Day21 {
      * Task 2
      *
      * @param inputs List of String
-     * @return
+     * @return Canonical Dangerous Ingredient List
      */
     public String task2(final List<String> inputs) {
         List<Food> foods = inputs.stream().map(Food::new).collect(Collectors.toList());
@@ -70,7 +70,8 @@ public class Day21 {
         Map<String, Set<String>> allergensWithPossibleIngredients =
                 mapAllergensToIngredients(foods);
 
-        Map<String, String> allergensWithIngredients = mapIngredientsToAllergens(allergensWithPossibleIngredients);
+        Map<String, String> allergensWithIngredients =
+                mapIngredientsToAllergens(allergensWithPossibleIngredients);
 
         List<String> allergens = new ArrayList<>(allergensWithIngredients.keySet());
         allergens.sort(String::compareTo);
@@ -78,7 +79,13 @@ public class Day21 {
         return buildCanonicalDangerousIngredientList(allergens, allergensWithIngredients);
     }
 
-    private Map<String, Set<String>> mapAllergensToIngredients(List<Food> foods) {
+    /**
+     * Maps an Allergen to a Set of Ingredients, that could possibly contain the Allergen
+     *
+     * @param foods List of Food
+     * @return Map with Allergen and Set of Ingredients
+     */
+    private Map<String, Set<String>> mapAllergensToIngredients(final List<Food> foods) {
         Map<String, Set<String>> ingredientsWithPossibleAllergens = new HashMap<>();
 
         for (Food food : foods) {
@@ -95,8 +102,15 @@ public class Day21 {
         return ingredientsWithPossibleAllergens;
     }
 
-    private int countIngredientWithoutAllergenAppearances(List<Food> foods,
-            Set<String> allIngredientsWithoutAllergens) {
+    /**
+     * Counts the Appearance of Ingredients in the given List of Food that have no Allergens
+     *
+     * @param foods                          List of Food
+     * @param allIngredientsWithoutAllergens Sets of Ingredients that have no Allergens
+     * @return Count
+     */
+    private int countIngredientWithoutAllergenAppearances(final List<Food> foods,
+            final Set<String> allIngredientsWithoutAllergens) {
         int ingredientsWithoutAllergenAppearance = 0;
 
         for (Food food : foods) {
@@ -109,8 +123,14 @@ public class Day21 {
         return ingredientsWithoutAllergenAppearance;
     }
 
+    /**
+     * Maps the Ingredients to exactly one Allergen
+     *
+     * @param allergensWithPossibleIngredients Map of Allergen with Set of possible Ingredients
+     * @return Map of Allergen with Ingredient
+     */
     private Map<String, String> mapIngredientsToAllergens(
-            Map<String, Set<String>> allergensWithPossibleIngredients) {
+            final Map<String, Set<String>> allergensWithPossibleIngredients) {
 
         Map<String, String> allergensWithIngredients = new HashMap<>();
 
@@ -120,8 +140,8 @@ public class Day21 {
         while (modifiedAllergensWithIngredients.keySet().size() > 0) {
             Set<String> allergensWithOneIngredient = new HashSet<>();
 
-            for(String allergen : modifiedAllergensWithIngredients.keySet()) {
-                if(modifiedAllergensWithIngredients.get(allergen).size() == 1) {
+            for (String allergen : modifiedAllergensWithIngredients.keySet()) {
+                if (modifiedAllergensWithIngredients.get(allergen).size() == 1) {
                     allergensWithOneIngredient.add(allergen);
                 }
             }
@@ -132,21 +152,32 @@ public class Day21 {
                                 .reduce(String::concat).get());
             }
 
-            modifiedAllergensWithIngredients = updateAllergensWithIngredients(modifiedAllergensWithIngredients, allergensWithIngredients);
+            modifiedAllergensWithIngredients =
+                    updateAllergensWithIngredients(modifiedAllergensWithIngredients,
+                            allergensWithIngredients);
         }
 
         return allergensWithIngredients;
     }
 
-    private Map<String, Set<String>> updateAllergensWithIngredients(Map<String, Set<String>> modifiedAllergensWithIngredients, Map<String, String> allergensWithIngredients) {
+    /**
+     * Updates the Map of Allergens with possible Ingredients
+     *
+     * @param modifiedAllergensWithIngredients Map with Allergen and Set of possible Ingredients
+     * @param allergensWithIngredients         Already matches Allergens with their Ingredient
+     * @return Modified Map with Allergen and Set of possible Ingredients
+     */
+    private Map<String, Set<String>> updateAllergensWithIngredients(
+            final Map<String, Set<String>> modifiedAllergensWithIngredients,
+            final Map<String, String> allergensWithIngredients) {
         Map<String, Set<String>> updated = new HashMap<>(modifiedAllergensWithIngredients);
 
-        for(String allergen : allergensWithIngredients.keySet()) {
+        for (String allergen : allergensWithIngredients.keySet()) {
             updated.remove(allergen);
         }
 
-        for(String allergen : updated.keySet()) {
-            for(String alreadyUsedAllergen : allergensWithIngredients.keySet()){
+        for (String allergen : updated.keySet()) {
+            for (String alreadyUsedAllergen : allergensWithIngredients.keySet()) {
                 updated.get(allergen).remove(allergensWithIngredients.get(alreadyUsedAllergen));
             }
         }
@@ -154,10 +185,18 @@ public class Day21 {
         return updated;
     }
 
-    private String buildCanonicalDangerousIngredientList(List<String> allergensOrder, Map<String, String> allergensWithIngredients) {
+    /**
+     * Builds the canonical dangerous Ingredient List of Allergens and their Ingredient
+     *
+     * @param allergensOrder           Alphabetical ordered Allergens
+     * @param allergensWithIngredients Map with Allergens and their Ingredients
+     * @return String
+     */
+    private String buildCanonicalDangerousIngredientList(final List<String> allergensOrder,
+            final Map<String, String> allergensWithIngredients) {
         StringBuilder builder = new StringBuilder();
 
-        for(String allergen : allergensOrder) {
+        for (String allergen : allergensOrder) {
             builder.append(allergensWithIngredients.get(allergen)).append(",");
         }
 

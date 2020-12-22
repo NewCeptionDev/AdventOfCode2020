@@ -48,42 +48,47 @@ public class Rule {
         return id;
     }
 
-    public Set<String> buildPossibleLiterals(Map<Integer, Rule> rules) {
-        if (subRules.size() == 0) {
-            return Set.of(literal + "");
-        } else {
-            Set<String> ruleCombinations = new HashSet<>();
-            for (List<Integer> subRule : subRules) {
-                List<Set<String>> ruleResults = new ArrayList<>();
+    public String buildRegex(Map<Integer, Rule> rules) {
 
-                for(Integer ruleId : subRule){
-                    ruleResults.add(rules.get(ruleId).buildPossibleLiterals(rules));
-                }
+        if (subRules.isEmpty()) {
+            return literal + "";
+        }
 
-                if(ruleResults.size() > 1) {
-                    ruleCombinations.addAll(getPossibilities(ruleResults));
+        StringBuilder builder = new StringBuilder();
+        builder.append("(");
+
+        for (List<Integer> subRule : subRules) {
+            if (subRule.contains(id)) {
+                if(subRule.indexOf(id) == subRule.size() - 1){
+                    builder.append("(");
+                    for (Integer rule : subRule) {
+                        if(rule != id) {
+                            builder.append(rules.get(rule).buildRegex(rules));
+                        }
+                    }
+                    builder.append(")+");
                 } else {
-                    ruleCombinations.addAll(ruleResults.get(0));
+                    builder.append("(");
+                    for (Integer rule : subRule) {
+                        if(rule != id) {
+                            builder.append("(").append(rules.get(rule).buildRegex(rules)).append(")+");
+                        }
+                    }
+                    builder.append(")");
                 }
-            }
-
-            return ruleCombinations;
-        }
-    }
-
-    private Set<String> getPossibilities(List<Set<String>> sets){
-        Set<String> possibilities = new HashSet<>();
-
-        if(sets.size() == 2){
-            for (String setOnePossibility : sets.get(0)) {
-                for (String setTwoPossibility : sets.get(1)) {
-                    possibilities.add(setOnePossibility + setTwoPossibility);
+            } else {
+                builder.append("(");
+                for (Integer rule : subRule) {
+                    builder.append(rules.get(rule).buildRegex(rules));
                 }
+                builder.append(")");
             }
-
-            return possibilities;
-        } else {
-            return getPossibilities(List.of(sets.get(0), getPossibilities(sets.subList(1, sets.size()))));
+            builder.append("|");
         }
+
+        builder.deleteCharAt(builder.length() - 1);
+        builder.append(")");
+
+        return builder.toString();
     }
 }
