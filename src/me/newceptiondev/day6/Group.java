@@ -6,59 +6,60 @@ import java.util.Set;
 
 public class Group {
 
-    private final List<String> answers;
+  private final List<String> answers;
 
-    public Group(final List<String> answers) {
-        this.answers = answers;
+  public Group(final List<String> answers) {
+    this.answers = answers;
+  }
+
+  /**
+   * Returns the Unions of all Answers
+   *
+   * @return Set of Character
+   */
+  public Set<Character> getUnionOfAnswers() {
+    Set<Character> union = new HashSet<>();
+
+    for(String answer : answers) {
+      union.addAll(mapStringToCharSet(answer));
     }
 
-    /**
-     * Returns the Unions of all Answers
-     *
-     * @return Set of Character
-     */
-    public Set<Character> getUnionOfAnswers() {
-        Set<Character> union = new HashSet<>();
+    return union;
+  }
 
-        for (String answer : answers) {
-            union.addAll(mapStringToCharSet(answer));
-        }
+  /**
+   * Returns the Intersection of all Answers
+   *
+   * @return Set of Character
+   */
+  public Set<Character> getIntersectionOfAnswers() {
+    Set<Character> intersection = null;
 
-        return union;
+    for(String answer : answers) {
+      if(intersection == null) {
+        intersection = mapStringToCharSet(answer);
+      } else {
+        intersection.retainAll(mapStringToCharSet(answer));
+      }
     }
 
-    /**
-     * Returns the Intersection of all Answers
-     *
-     * @return Set of Character
-     */
-    public Set<Character> getIntersectionOfAnswers() {
-        Set<Character> intersection = null;
+    return intersection;
+  }
 
-        for (String answer : answers) {
-            if (intersection == null) {
-                intersection = mapStringToCharSet(answer);
-            } else {
-                intersection.retainAll(mapStringToCharSet(answer));
-            }
-        }
+  /**
+   * Maps a String to a Set of Character
+   *
+   * @param input String
+   *
+   * @return Set of Character
+   */
+  private Set<Character> mapStringToCharSet(final String input) {
+    Set<Character> characterSet = new HashSet<>();
 
-        return intersection;
+    for(char character : input.toCharArray()) {
+      characterSet.add(character);
     }
 
-    /**
-     * Maps a String to a Set of Character
-     *
-     * @param input String
-     * @return Set of Character
-     */
-    private Set<Character> mapStringToCharSet(final String input) {
-        Set<Character> characterSet = new HashSet<>();
-
-        for (char character : input.toCharArray()) {
-            characterSet.add(character);
-        }
-
-        return characterSet;
-    }
+    return characterSet;
+  }
 }

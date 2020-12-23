@@ -5,183 +5,265 @@ import java.util.List;
 
 public class SeatingArea {
 
-    private char[][] seats;
+  private char[][] seats;
 
-    private static final char OCCUPIED = '#';
-    private static final char EMPTY = 'L';
-    private static final char FLOOR = '.';
+  private static final char OCCUPIED = '#';
+  private static final char EMPTY = 'L';
+  private static final char FLOOR = '.';
 
-    public SeatingArea(List<String> description) {
-        int height = description.size();
-        int width = description.get(0).length();
+  public SeatingArea(List<String> description) {
+    int height = description.size();
+    int width = description.get(0).length();
 
-        seats = new char[height][width];
+    seats = new char[height][width];
 
-        for (int i = 0; i < description.size(); i++) {
-            seats[i] = description.get(i).toCharArray();
+    for(int i = 0; i < description.size(); i++) {
+      seats[i] = description.get(i).toCharArray();
+    }
+  }
+
+  public boolean updateSeatingAreaForTask1() {
+    char[][] newSeatOccupancy = new char[seats.length][seats[0].length];
+
+    for(int y = 0; y < seats.length; y++) {
+      for(int x = 0; x < seats[y].length; x++) {
+        if(seats[y][x] == FLOOR) {
+          newSeatOccupancy[y][x] = FLOOR;
+        } else {
+
+          int occupiedSurroundingSeats = getOccupiedSurroundingSeatsForTask1(x, y);
+
+          if(occupiedSurroundingSeats == 0) {
+            newSeatOccupancy[y][x] = OCCUPIED;
+          } else if(occupiedSurroundingSeats >= 4) {
+            newSeatOccupancy[y][x] = EMPTY;
+          } else {
+            newSeatOccupancy[y][x] = seats[y][x];
+          }
         }
+      }
     }
 
-    public boolean updateSeatingAreaForTask1() {
-        char[][] newSeatOccupancy = new char[seats.length][seats[0].length];
+    boolean different = !Arrays.deepEquals(seats, newSeatOccupancy);
 
-        for (int y = 0; y < seats.length; y++) {
-            for (int x = 0; x < seats[y].length; x++) {
-                if (seats[y][x] == FLOOR) {
-                    newSeatOccupancy[y][x] = FLOOR;
-                } else {
+    seats = newSeatOccupancy;
 
-                    int occupiedSurroundingSeats = getOccupiedSurroundingSeatsForTask1(x, y);
+    return different;
+  }
 
-                    if (occupiedSurroundingSeats == 0) {
-                        newSeatOccupancy[y][x] = OCCUPIED;
-                    } else if (occupiedSurroundingSeats >= 4) {
-                        newSeatOccupancy[y][x] = EMPTY;
-                    } else {
-                        newSeatOccupancy[y][x] = seats[y][x];
-                    }
-                }
-            }
+  /**
+   * Updates the Seating Area by the Requirements of Task 2
+   *
+   * @return If the new Seat Occupation is different to the one before
+   */
+  public boolean updateSeatingAreaForTask2() {
+    char[][] newSeatOccupancy = new char[seats.length][seats[0].length];
+
+    for(int y = 0; y < seats.length; y++) {
+      for(int x = 0; x < seats[y].length; x++) {
+        if(seats[y][x] == FLOOR) {
+          newSeatOccupancy[y][x] = FLOOR;
+        } else {
+
+          int occupiedSurroundingSeats = getOccupiedSurroundingSeatsForTask2(x, y);
+
+          if(occupiedSurroundingSeats == 0) {
+            newSeatOccupancy[y][x] = OCCUPIED;
+          } else if(occupiedSurroundingSeats >= 5) {
+            newSeatOccupancy[y][x] = EMPTY;
+          } else {
+            newSeatOccupancy[y][x] = seats[y][x];
+          }
         }
-
-        boolean same = Arrays.deepEquals(seats, newSeatOccupancy);
-
-        this.seats = newSeatOccupancy;
-
-        return same;
+      }
     }
 
-    public boolean updateSeatingAreaForTask2() {
-        char[][] newSeatOccupancy = new char[seats.length][seats[0].length];
+    boolean different = !Arrays.deepEquals(seats, newSeatOccupancy);
 
-        for (int y = 0; y < seats.length; y++) {
-            for (int x = 0; x < seats[y].length; x++) {
-                if (seats[y][x] == FLOOR) {
-                    newSeatOccupancy[y][x] = FLOOR;
-                } else {
+    seats = newSeatOccupancy;
 
-                    int occupiedSurroundingSeats = getOccupiedSurroundingSeatsForTask2(x, y);
+    return different;
+  }
 
-                    if (occupiedSurroundingSeats == 0) {
-                        newSeatOccupancy[y][x] = OCCUPIED;
-                    } else if (occupiedSurroundingSeats >= 5) {
-                        newSeatOccupancy[y][x] = EMPTY;
-                    } else {
-                        newSeatOccupancy[y][x] = seats[y][x];
-                    }
-                }
-            }
-        }
+  /**
+   * Gets Count of Occupied Seats surrounding the given Position by Requirements of Task 1
+   *
+   * @param horizontal Horizontal Position
+   * @param vertical   Vertical Position
+   *
+   * @return Count of Occupied Seats
+   */
+  private int getOccupiedSurroundingSeatsForTask1(int horizontal, int vertical) {
+    int occupied = 0;
 
-        boolean same = Arrays.deepEquals(seats, newSeatOccupancy);
+    occupied += getOccupiedSeatsWesternOfPosition(horizontal, vertical);
 
-        this.seats = newSeatOccupancy;
+    occupied += getOccupiedSeatsEasternOfPosition(horizontal, vertical);
 
-        return same;
+    if(vertical > 0 && seats[vertical - 1][horizontal] == OCCUPIED) {
+      occupied++;
     }
 
-    private int getOccupiedSurroundingSeatsForTask1(int x, int y) {
-        int occupied = 0;
-
-        if (x > 0) {
-            if (seats[y][x - 1] == OCCUPIED) {
-                occupied++;
-            }
-
-            if (y > 0 && seats[y - 1][x - 1] == OCCUPIED) {
-                occupied++;
-            }
-
-            if (y < seats.length - 1 && seats[y + 1][x - 1] == OCCUPIED) {
-                occupied++;
-            }
-        }
-
-        if (x < seats[y].length - 1) {
-            if (seats[y][x + 1] == OCCUPIED) {
-                occupied++;
-            }
-
-            if (y > 0 && seats[y - 1][x + 1] == OCCUPIED) {
-                occupied++;
-            }
-
-            if (y < seats.length - 1 && seats[y + 1][x + 1] == OCCUPIED) {
-                occupied++;
-            }
-        }
-
-        if (y > 0 && seats[y - 1][x] == OCCUPIED) {
-            occupied++;
-        }
-
-        if (y < seats.length - 1 && seats[y + 1][x] == OCCUPIED) {
-            occupied++;
-        }
-
-        return occupied;
+    if(vertical < seats.length - 1 && seats[vertical + 1][horizontal] == OCCUPIED) {
+      occupied++;
     }
 
-    private int getOccupiedSurroundingSeatsForTask2(int x, int y) {
-        int occupied = 0;
+    return occupied;
+  }
 
-        if(isNextVisibleSeatOccupied(x + 1, y, 1, 0)){
-            occupied++;
-        }
+  /**
+   * Counts the Occupied Seats eastern of the given Position
+   *
+   * @param horizontal Horizontal Position
+   * @param vertical   Vertical Position
+   *
+   * @return Count of Occupied Seats
+   */
+  private int getOccupiedSeatsEasternOfPosition(final int horizontal, final int vertical) {
+    int occupied = 0;
 
-        if(isNextVisibleSeatOccupied(x - 1, y, -1, 0)){
-            occupied++;
-        }
+    if(horizontal < seats[vertical].length - 1) {
+      if(seats[vertical][horizontal + 1] == OCCUPIED) {
+        occupied++;
+      }
 
-        if(isNextVisibleSeatOccupied(x, y + 1, 0, 1)){
-            occupied++;
-        }
+      if(vertical > 0 && seats[vertical - 1][horizontal + 1] == OCCUPIED) {
+        occupied++;
+      }
 
-        if(isNextVisibleSeatOccupied(x , y - 1, 0, -1)){
-            occupied++;
-        }
+      if(vertical < seats.length - 1 && seats[vertical + 1][horizontal + 1] == OCCUPIED) {
+        occupied++;
+      }
+    }
+    return occupied;
+  }
 
-        if(isNextVisibleSeatOccupied(x + 1, y + 1, 1, 1)){
-            occupied++;
-        }
+  /**
+   * Counts the Occupied Seats western of the given Position
+   *
+   * @param horizontal Horizontal Position
+   * @param vertical   Vertical Position
+   *
+   * @return Count of Occupied Seats
+   */
+  private int getOccupiedSeatsWesternOfPosition(final int horizontal, final int vertical) {
+    int occupied = 0;
 
-        if(isNextVisibleSeatOccupied(x + 1, y - 1, 1, -1)){
-            occupied++;
-        }
+    if(horizontal > 0) {
+      if(seats[vertical][horizontal - 1] == OCCUPIED) {
+        occupied++;
+      }
 
-        if(isNextVisibleSeatOccupied(x - 1, y - 1, -1, -1)){
-            occupied++;
-        }
+      if(vertical > 0 && seats[vertical - 1][horizontal - 1] == OCCUPIED) {
+        occupied++;
+      }
 
-        if(isNextVisibleSeatOccupied(x - 1, y + 1, -1, 1)){
-            occupied++;
-        }
+      if(vertical < seats.length - 1 && seats[vertical + 1][horizontal - 1] == OCCUPIED) {
+        occupied++;
+      }
+    }
+    return occupied;
+  }
 
-        return occupied;
+  /**
+   * Returns the Count of Occupied Seats surrounding the given Seats by the Requirements of Task 2
+   *
+   * @param horizontal Horizontal Position
+   * @param vertical   Vertical Position
+   *
+   * @return Count of Occupied Seats
+   */
+  private int getOccupiedSurroundingSeatsForTask2(int horizontal, int vertical) {
+    int occupied = 0;
+
+    if(isNextVisibleSeatOccupied(horizontal + 1, vertical, 1, 0)) {
+      occupied++;
     }
 
-    private boolean isNextVisibleSeatOccupied(int x, int y, int xMovement, int yMovement) {
-        if (y >= 0 && y < seats.length && x >= 0 && x < seats[y].length) {
-            if (seats[y][x] == OCCUPIED) {
-                return true;
-            } else if(seats[y][x] == FLOOR){
-                return isNextVisibleSeatOccupied(x + xMovement, y + yMovement, xMovement, yMovement);
-            }
-        }
-        return false;
+    if(isNextVisibleSeatOccupied(horizontal - 1, vertical, -1, 0)) {
+      occupied++;
     }
 
-    public int getOccupiedSeatsCount() {
-        int occupiedSeats = 0;
-
-        for (char[] seat : seats) {
-            for (char c : seat) {
-                if (c == OCCUPIED) {
-                    occupiedSeats++;
-                }
-            }
-        }
-
-        return occupiedSeats;
+    if(isNextVisibleSeatOccupied(horizontal, vertical + 1, 0, 1)) {
+      occupied++;
     }
+
+    if(isNextVisibleSeatOccupied(horizontal, vertical - 1, 0, -1)) {
+      occupied++;
+    }
+
+    if(isNextVisibleSeatOccupied(horizontal + 1, vertical + 1, 1, 1)) {
+      occupied++;
+    }
+
+    if(isNextVisibleSeatOccupied(horizontal + 1, vertical - 1, 1, -1)) {
+      occupied++;
+    }
+
+    if(isNextVisibleSeatOccupied(horizontal - 1, vertical - 1, -1, -1)) {
+      occupied++;
+    }
+
+    if(isNextVisibleSeatOccupied(horizontal - 1, vertical + 1, -1, 1)) {
+      occupied++;
+    }
+
+    return occupied;
+  }
+
+  /**
+   * Checks if the next Visible Seat is Occupied
+   *
+   * @param horizontal         Horizontal Position
+   * @param vertical           Vertical Position
+   * @param horizontalMovement Horizontal Movement
+   * @param verticalMovement   Vertical Movement
+   *
+   * @return True if the next Visible Seat is Occupied, False if it is not Occupied
+   */
+  private boolean isNextVisibleSeatOccupied(int horizontal, int vertical, int horizontalMovement,
+                                            int verticalMovement) {
+    if(vertical >= 0 && vertical < seats.length && horizontal >= 0 && horizontal < seats[vertical].length) {
+      if(seats[vertical][horizontal] == OCCUPIED) {
+        return true;
+      } else if(seats[vertical][horizontal] == FLOOR) {
+        return isNextVisibleSeatOccupied(horizontal + horizontalMovement, vertical + verticalMovement,
+                                         horizontalMovement, verticalMovement);
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Returns the Count of all Occupied Seats
+   *
+   * @return Count of all Occupied Seats
+   */
+  public int getOccupiedSeatsCount() {
+    int occupiedSeats = 0;
+
+    for(char[] seat : seats) {
+      occupiedSeats = getOccupiedSeatsWithinRow(seat);
+    }
+
+    return occupiedSeats;
+  }
+
+  /**
+   * Returns the Count of Occupied Seats in the given Row
+   *
+   * @param row Char Array Row
+   *
+   * @return Count of Occupied Seats
+   */
+  private int getOccupiedSeatsWithinRow(final char[] row) {
+    int occupied = 0;
+
+    for(char seat : row) {
+      if(seat == OCCUPIED) {
+        occupied++;
+      }
+    }
+    return occupied;
+  }
 }

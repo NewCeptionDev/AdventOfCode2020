@@ -4,21 +4,19 @@ import me.newceptiondev.util.FileUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-public class Day16 {
+public final class Day16 {
 
-    public static final String fileName = "day16Task1Input";
+    private static final String FILE_NAME = "day16Task1Input";
 
     public static void main(String[] args) {
-        List<String> inputs = FileUtil.readFileAsListOfLines(fileName);
+        List<String> inputs = FileUtil.readFileAsListOfLines(FILE_NAME);
 
         new Day16(inputs);
     }
 
-    public Day16() {
-    }
-
-    public Day16(List<String> inputs) {
+    private Day16(List<String> inputs) {
         System.out.println("Task 1: " + task1(inputs));
         System.out.println("Task 2: " + task2(inputs));
     }
@@ -38,11 +36,18 @@ public class Day16 {
 
         List<Integer> invalidValues = new ArrayList<>();
 
-        for (Ticket ticket : nearbyTickets) {
+        for(Ticket ticket : nearbyTickets) {
             invalidValues.addAll(ticket.getInvalidValues(fields));
         }
 
-        return invalidValues.stream().reduce(Integer::sum).get();
+        Optional<Integer> scanningErrorRate = invalidValues.stream().reduce(Integer::sum);
+
+        if(scanningErrorRate.isPresent()) {
+            return scanningErrorRate.get();
+        }
+
+        System.err.println("There was an Error summing up the Invalid Values");
+        return 0;
     }
 
     /**

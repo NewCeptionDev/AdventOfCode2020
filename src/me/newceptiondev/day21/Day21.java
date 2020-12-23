@@ -7,10 +7,10 @@ import java.util.stream.Collectors;
 
 public class Day21 {
 
-    public static final String fileName = "day21Task1Input";
+    private static final String FILE_NAME = "day21Task1Input";
 
     public static void main(String[] args) {
-        List<String> inputs = FileUtil.readFileAsListOfLines(fileName);
+        List<String> inputs = FileUtil.readFileAsListOfLines(FILE_NAME);
 
         new Day21(inputs);
     }
@@ -18,7 +18,7 @@ public class Day21 {
     public Day21() {
     }
 
-    public Day21(List<String> inputs) {
+    private Day21(List<String> inputs) {
         System.out.println("Task 1: " + task1(inputs));
         System.out.println("Task 2: " + task2(inputs));
     }
@@ -80,9 +80,10 @@ public class Day21 {
     }
 
     /**
-     * Maps an Allergen to a Set of Ingredients, that could possibly contain the Allergen
+     * Maps an Allergen to a Set of Ingredients, that could contain the Allergen
      *
      * @param foods List of Food
+     *
      * @return Map with Allergen and Set of Ingredients
      */
     private Map<String, Set<String>> mapAllergensToIngredients(final List<Food> foods) {

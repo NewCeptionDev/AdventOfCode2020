@@ -4,19 +4,19 @@ import java.util.*;
 
 public class Rule {
 
-    private int id;
+    private final int id;
     private Set<List<Integer>> subRules = new HashSet<>();
     private char literal;
 
     public Rule(String description) {
         String[] idAndValues = description.split(":");
 
-        this.id = Integer.parseInt(idAndValues[0]);
+        id = Integer.parseInt(idAndValues[0]);
 
-        if (idAndValues[1].contains("\"")) {
-            this.literal = parseLiteral(idAndValues[1].trim());
+        if(idAndValues[1].contains("\"")) {
+            literal = parseLiteral(idAndValues[1].trim());
         } else {
-            this.subRules = parseSubRules(idAndValues[1].trim());
+            subRules = parseSubRules(idAndValues[1].trim());
         }
     }
 
@@ -29,12 +29,12 @@ public class Rule {
 
         String[] rules = values.split("\\|");
 
-        for (String rule : rules) {
+        for(String rule : rules) {
             List<Integer> successiveRules = new ArrayList<>();
 
             String[] ruleValues = rule.trim().split(" ");
 
-            for (String ruleValue : ruleValues) {
+            for(String ruleValue : ruleValues) {
                 successiveRules.add(Integer.parseInt(ruleValue));
             }
 
@@ -50,18 +50,18 @@ public class Rule {
 
     public String buildRegex(Map<Integer, Rule> rules) {
 
-        if (subRules.isEmpty()) {
+        if(subRules.isEmpty()) {
             return literal + "";
         }
 
         StringBuilder builder = new StringBuilder();
         builder.append("(");
 
-        for (List<Integer> subRule : subRules) {
-            if (subRule.contains(id)) {
-                if(subRule.indexOf(id) == subRule.size() - 1){
+        for(List<Integer> subRule : subRules) {
+            if(subRule.contains(id)) {
+                if(subRule.indexOf(id) == subRule.size() - 1) {
                     builder.append("(");
-                    for (Integer rule : subRule) {
+                    for(Integer rule : subRule) {
                         if(rule != id) {
                             builder.append(rules.get(rule).buildRegex(rules));
                         }
@@ -69,7 +69,7 @@ public class Rule {
                     builder.append(")+");
                 } else {
                     builder.append("(");
-                    for (Integer rule : subRule) {
+                    for(Integer rule : subRule) {
                         if(rule != id) {
                             builder.append("(").append(rules.get(rule).buildRegex(rules)).append(")+");
                         }
@@ -78,7 +78,7 @@ public class Rule {
                 }
             } else {
                 builder.append("(");
-                for (Integer rule : subRule) {
+                for(Integer rule : subRule) {
                     builder.append(rules.get(rule).buildRegex(rules));
                 }
                 builder.append(")");
