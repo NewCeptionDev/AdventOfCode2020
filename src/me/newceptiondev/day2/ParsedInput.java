@@ -37,20 +37,6 @@ public class ParsedInput {
   }
 
   /**
-   * Checks if the ParsedInput is a Valid Input regarding the Requirements of Task 2
-   *
-   * @return True if the required Character is at exactly one Position of firstPosition or secondPosition
-   */
-  public boolean isValidForTask2() {
-    //Manipulating Position with - 1 as Toboggan Corporate Policies have no concept of "index zero"
-    boolean correctCharacterAtFirstPosition =
-        firstPosition - 1 >= 0 && password.charAt(firstPosition - 1) == requiredCharacter;
-    boolean correctCharacterAtSecondPosition = password.charAt(secondPosition - 1) == requiredCharacter;
-
-    return correctCharacterAtFirstPosition ^ correctCharacterAtSecondPosition;
-  }
-
-  /**
    * Maps the Password to its Letters, and their Occurrence Count
    *
    * @return Map with all different Letters and their Occurrence Count
@@ -69,5 +55,19 @@ public class ParsedInput {
     }
 
     return letters;
+  }
+
+  /**
+   * Checks if the ParsedInput is a Valid Input regarding the Requirements of Task 2
+   *
+   * @return True if the required Character is at exactly one Position of firstPosition or secondPosition
+   */
+  public boolean isValidForTask2() {
+    //Manipulating Position with - 1 as Toboggan Corporate Policies have no concept of "index zero"
+    boolean correctCharacterAtFirstPosition =
+        firstPosition - 1 >= 0 && password.charAt(firstPosition - 1) == requiredCharacter;
+    boolean correctCharacterAtSecondPosition = password.charAt(secondPosition - 1) == requiredCharacter;
+
+    return correctCharacterAtFirstPosition ^ correctCharacterAtSecondPosition;
   }
 }

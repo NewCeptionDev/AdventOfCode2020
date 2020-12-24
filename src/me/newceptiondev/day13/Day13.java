@@ -56,6 +56,21 @@ public class Day13 {
     return -1;
   }
 
+  private List<Integer> parseBusIds(String input) {
+    List<Integer> parsedBusIds = new ArrayList<>();
+    String[] busIds = input.split(",");
+
+    for(String id : busIds) {
+      if(id.equals("x")) {
+        parsedBusIds.add(null);
+      } else {
+        parsedBusIds.add(Integer.parseInt(id));
+      }
+    }
+
+    return parsedBusIds;
+  }
+
   /**
    * Task 2
    *
@@ -93,21 +108,6 @@ public class Day13 {
     }
 
     return timestamp;
-  }
-
-  private List<Integer> parseBusIds(String input) {
-    List<Integer> parsedBusIds = new ArrayList<>();
-    String[] busIds = input.split(",");
-
-    for(String id : busIds) {
-      if(id.equals("x")) {
-        parsedBusIds.add(null);
-      } else {
-        parsedBusIds.add(Integer.parseInt(id));
-      }
-    }
-
-    return parsedBusIds;
   }
 
   private Integer findHighestInteger(List<Integer> input) {

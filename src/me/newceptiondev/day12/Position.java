@@ -35,6 +35,15 @@ public class Position {
     this.waypoint = waypoint;
   }
 
+  /**
+   * Calculates the Manhattan Distance between east, north and 0,0
+   *
+   * @return Manhattan Distance
+   */
+  public int calculateManhattanPositionToZero() {
+    return Math.abs(east) + Math.abs(north);
+  }
+
   public int getEast() {
     return east;
   }
@@ -49,14 +58,5 @@ public class Position {
 
   public Tuple<Integer, Integer> getWaypoint() {
     return waypoint;
-  }
-
-  /**
-   * Calculates the Manhattan Distance between east, north and 0,0
-   *
-   * @return Manhattan Distance
-   */
-  public int calculateManhattanPositionToZero() {
-    return Math.abs(east) + Math.abs(north);
   }
 }

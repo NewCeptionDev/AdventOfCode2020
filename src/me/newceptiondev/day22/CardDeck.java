@@ -1,72 +1,66 @@
 package me.newceptiondev.day22;
 
 import java.util.ArrayDeque;
-import java.util.Objects;
 import java.util.Queue;
-import java.util.Set;
 
 public class CardDeck {
 
-    private final Queue<Integer> deck = new ArrayDeque<>();
+  private final Queue<Integer> deck = new ArrayDeque<>();
 
-    public void addCardToDeck(Integer card) {
-        deck.add(card);
+  public CardDeck cloneWithSize(int size) {
+    CardDeck clone = new CardDeck();
+    int currentSize = 0;
+
+    for(Integer card : getDeck()) {
+      if(currentSize < size) {
+        clone.addCardToDeck(card);
+        currentSize++;
+      }
     }
 
-    public Integer getFirstCard() {
-        return deck.poll();
+    return clone;
+  }
+
+  public void addCardToDeck(Integer card) {
+    getDeck().add(card);
+  }
+
+  private Queue<Integer> getDeck() {
+    return deck;
+  }
+
+  public boolean equals(CardDeck other) {
+    Queue<Integer> deckClone = cloneCardDeck().getDeck();
+    Queue<Integer> otherClone = other.cloneCardDeck().getDeck();
+
+    boolean equals = true;
+
+    while(!deckClone.isEmpty() && equals) {
+      equals = deckClone.poll().equals(otherClone.poll());
     }
 
-    public boolean isDeckEmpty(){
-        return deck.isEmpty();
+    return equals && otherClone.isEmpty();
+  }
+
+  public CardDeck cloneCardDeck() {
+    CardDeck clone = new CardDeck();
+
+    for(Integer card : getDeck()) {
+      clone.addCardToDeck(card);
     }
 
-    public int getDeckSize() {
-        return deck.size();
-    }
+    return clone;
+  }
 
-    public CardDeck clone() {
-        CardDeck clone = new CardDeck();
+  public Integer getFirstCard() {
+    return getDeck().poll();
+  }
 
-        for(Integer card : deck) {
-            clone.addCardToDeck(card);
-        }
+  public boolean isDeckEmpty() {
+    return getDeck().isEmpty();
+  }
 
-        return clone;
-    }
-
-    public CardDeck cloneWithSize(int size) {
-        CardDeck clone = new CardDeck();
-        int currentSize = 0;
-
-        for(Integer card : deck) {
-            if(currentSize < size) {
-                clone.addCardToDeck(card);
-                currentSize++;
-            }
-        }
-
-        return clone;
-    }
-
-     public boolean equals(CardDeck other) {
-        Queue<Integer> deckClone = this.clone().deck;
-        Queue<Integer> otherClone = other.clone().deck;
-
-        boolean equals = true;
-
-        while(deckClone.size() > 0 && equals) {
-            equals = deckClone.poll().equals(otherClone.poll());
-        }
-
-        return equals && otherClone.size() == 0;
-    }
-
-    @Override public int hashCode() {
-        return Objects.hash(deck);
-    }
-
-    @Override public String toString() {
-        return "CardDeck{" + "deck=" + deck + '}';
-    }
+  public int getDeckSize() {
+    return getDeck().size();
+  }
 }

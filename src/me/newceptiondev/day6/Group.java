@@ -28,6 +28,23 @@ public class Group {
   }
 
   /**
+   * Maps a String to a Set of Character
+   *
+   * @param input String
+   *
+   * @return Set of Character
+   */
+  private Set<Character> mapStringToCharSet(final String input) {
+    Set<Character> characterSet = new HashSet<>();
+
+    for(char character : input.toCharArray()) {
+      characterSet.add(character);
+    }
+
+    return characterSet;
+  }
+
+  /**
    * Returns the Intersection of all Answers
    *
    * @return Set of Character
@@ -44,22 +61,5 @@ public class Group {
     }
 
     return intersection;
-  }
-
-  /**
-   * Maps a String to a Set of Character
-   *
-   * @param input String
-   *
-   * @return Set of Character
-   */
-  private Set<Character> mapStringToCharSet(final String input) {
-    Set<Character> characterSet = new HashSet<>();
-
-    for(char character : input.toCharArray()) {
-      characterSet.add(character);
-    }
-
-    return characterSet;
   }
 }

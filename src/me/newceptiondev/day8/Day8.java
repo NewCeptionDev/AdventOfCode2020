@@ -38,36 +38,6 @@ public final class Day8 {
   }
 
   /**
-   * Task 2
-   *
-   * @param inputs List of String
-   *
-   * @return Accumulator after the Code was fully executed
-   */
-  public int task2(List<String> inputs) {
-    List<Instruction> instructions = inputs.stream().map(Instruction::new).collect(Collectors.toList());
-
-    for(int i = 0; i < instructions.size(); i++) {
-      Instruction instruction = instructions.get(i);
-
-      Tuple<Integer, Boolean> testResult = null;
-
-      if(instruction.getOperation() == Operation.JUMP) {
-        testResult = switchInstructionAndRun(instructions, i, Operation.NO_OPERATION);
-      } else if(instruction.getOperation() == Operation.NO_OPERATION) {
-        testResult = switchInstructionAndRun(instructions, i, Operation.JUMP);
-      }
-
-      if(testResult != null && testResult.getY()) {
-        return testResult.getX();
-      }
-    }
-
-    System.err.println("There was no Instruction Change that led to a full Execution of Code");
-    return -1;
-  }
-
-  /**
    * Runs the Set of Instructions and returns the Accumulator Value
    *
    * @param instructions List of Instruction
@@ -101,6 +71,36 @@ public final class Day8 {
     }
 
     return new Tuple<>(accumulator, true);
+  }
+
+  /**
+   * Task 2
+   *
+   * @param inputs List of String
+   *
+   * @return Accumulator after the Code was fully executed
+   */
+  public int task2(List<String> inputs) {
+    List<Instruction> instructions = inputs.stream().map(Instruction::new).collect(Collectors.toList());
+
+    for(int i = 0; i < instructions.size(); i++) {
+      Instruction instruction = instructions.get(i);
+
+      Tuple<Integer, Boolean> testResult = null;
+
+      if(instruction.getOperation() == Operation.JUMP) {
+        testResult = switchInstructionAndRun(instructions, i, Operation.NO_OPERATION);
+      } else if(instruction.getOperation() == Operation.NO_OPERATION) {
+        testResult = switchInstructionAndRun(instructions, i, Operation.JUMP);
+      }
+
+      if(testResult != null && testResult.getY()) {
+        return testResult.getX();
+      }
+    }
+
+    System.err.println("There was no Instruction Change that led to a full Execution of Code");
+    return -1;
   }
 
   /**

@@ -80,40 +80,6 @@ public class Instruction {
   }
 
   /**
-   * Applies the Instruction to the given Position according to the Instruction Set of Task 2
-   *
-   * @param currentPosition Position Current Position
-   *
-   * @return Position after Instruction
-   */
-  public Position applyInstructionForTask2(final Position currentPosition) {
-
-    switch(action) {
-      case LEFT:
-      case RIGHT:
-        return new Position(currentPosition.getEast(), currentPosition.getNorth(),
-                            rotateWaypoint(currentPosition.getWaypoint()));
-      case FORWARD:
-        return moveTowardsWaypoint(currentPosition);
-      case NORTH:
-        return new Position(currentPosition.getEast(), currentPosition.getNorth(),
-                            moveWaypoint(currentPosition.getWaypoint(), Direction.NORTH));
-      case EAST:
-        return new Position(currentPosition.getEast(), currentPosition.getNorth(),
-                            moveWaypoint(currentPosition.getWaypoint(), Direction.EAST));
-      case WEST:
-        return new Position(currentPosition.getEast(), currentPosition.getNorth(),
-                            moveWaypoint(currentPosition.getWaypoint(), Direction.WEST));
-      case SOUTH:
-        return new Position(currentPosition.getEast(), currentPosition.getNorth(),
-                            moveWaypoint(currentPosition.getWaypoint(), Direction.SOUTH));
-    }
-
-    System.err.println("There was an Error parsing the Action");
-    return null;
-  }
-
-  /**
    * Turns the Ship by the given Direction
    *
    * @param currentDirection Direction
@@ -170,6 +136,40 @@ public class Instruction {
     }
 
     System.err.println("Direction could not be parsed");
+    return null;
+  }
+
+  /**
+   * Applies the Instruction to the given Position according to the Instruction Set of Task 2
+   *
+   * @param currentPosition Position Current Position
+   *
+   * @return Position after Instruction
+   */
+  public Position applyInstructionForTask2(final Position currentPosition) {
+
+    switch(action) {
+      case LEFT:
+      case RIGHT:
+        return new Position(currentPosition.getEast(), currentPosition.getNorth(),
+                            rotateWaypoint(currentPosition.getWaypoint()));
+      case FORWARD:
+        return moveTowardsWaypoint(currentPosition);
+      case NORTH:
+        return new Position(currentPosition.getEast(), currentPosition.getNorth(),
+                            moveWaypoint(currentPosition.getWaypoint(), Direction.NORTH));
+      case EAST:
+        return new Position(currentPosition.getEast(), currentPosition.getNorth(),
+                            moveWaypoint(currentPosition.getWaypoint(), Direction.EAST));
+      case WEST:
+        return new Position(currentPosition.getEast(), currentPosition.getNorth(),
+                            moveWaypoint(currentPosition.getWaypoint(), Direction.WEST));
+      case SOUTH:
+        return new Position(currentPosition.getEast(), currentPosition.getNorth(),
+                            moveWaypoint(currentPosition.getWaypoint(), Direction.SOUTH));
+    }
+
+    System.err.println("There was an Error parsing the Action");
     return null;
   }
 

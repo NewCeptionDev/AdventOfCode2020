@@ -84,6 +84,25 @@ public final class Day1 {
   }
 
   /**
+   * Sorts the Inputs
+   *
+   * @param inputs         List of Inputs
+   * @param lowerThanEqual Set of all Integer in the List that are less or equal to the Half of the searchedNumber
+   * @param higher         Set of all Integer in the List that are higher than Half of the searchedNumber
+   */
+  private void sortInputs(final List<String> inputs, Set<Integer> lowerThanEqual, Set<Integer> higher) {
+    for(String input : inputs) {
+      int parsedInput = Integer.parseInt(input);
+
+      if(parsedInput <= (SEARCHED_NUMBER / 2)) {
+        lowerThanEqual.add(parsedInput);
+      } else {
+        higher.add(parsedInput);
+      }
+    }
+  }
+
+  /**
    * Runs over the smaller Set and searches for the corresponding Number in the second Set
    *
    * @param smallerSet   The Set with fewer Numbers in it
@@ -143,25 +162,6 @@ public final class Day1 {
     modifiedSet.remove(toRemove);
 
     return modifiedSet;
-  }
-
-  /**
-   * Sorts the Inputs
-   *
-   * @param inputs         List of Inputs
-   * @param lowerThanEqual Set of all Integer in the List that are less or equal to the Half of the searchedNumber
-   * @param higher         Set of all Integer in the List that are higher than Half of the searchedNumber
-   */
-  private void sortInputs(final List<String> inputs, Set<Integer> lowerThanEqual, Set<Integer> higher) {
-    for(String input : inputs) {
-      int parsedInput = Integer.parseInt(input);
-
-      if(parsedInput <= (SEARCHED_NUMBER / 2)) {
-        lowerThanEqual.add(parsedInput);
-      } else {
-        higher.add(parsedInput);
-      }
-    }
   }
 
 }

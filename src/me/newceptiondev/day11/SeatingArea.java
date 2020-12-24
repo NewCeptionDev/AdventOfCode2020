@@ -5,11 +5,10 @@ import java.util.List;
 
 public class SeatingArea {
 
-  private char[][] seats;
-
   private static final char OCCUPIED = '#';
   private static final char EMPTY = 'L';
   private static final char FLOOR = '.';
+  private char[][] seats;
 
   public SeatingArea(List<String> description) {
     int height = description.size();
@@ -36,40 +35,6 @@ public class SeatingArea {
           if(occupiedSurroundingSeats == 0) {
             newSeatOccupancy[y][x] = OCCUPIED;
           } else if(occupiedSurroundingSeats >= 4) {
-            newSeatOccupancy[y][x] = EMPTY;
-          } else {
-            newSeatOccupancy[y][x] = seats[y][x];
-          }
-        }
-      }
-    }
-
-    boolean different = !Arrays.deepEquals(seats, newSeatOccupancy);
-
-    seats = newSeatOccupancy;
-
-    return different;
-  }
-
-  /**
-   * Updates the Seating Area by the Requirements of Task 2
-   *
-   * @return If the new Seat Occupation is different to the one before
-   */
-  public boolean updateSeatingAreaForTask2() {
-    char[][] newSeatOccupancy = new char[seats.length][seats[0].length];
-
-    for(int y = 0; y < seats.length; y++) {
-      for(int x = 0; x < seats[y].length; x++) {
-        if(seats[y][x] == FLOOR) {
-          newSeatOccupancy[y][x] = FLOOR;
-        } else {
-
-          int occupiedSurroundingSeats = getOccupiedSurroundingSeatsForTask2(x, y);
-
-          if(occupiedSurroundingSeats == 0) {
-            newSeatOccupancy[y][x] = OCCUPIED;
-          } else if(occupiedSurroundingSeats >= 5) {
             newSeatOccupancy[y][x] = EMPTY;
           } else {
             newSeatOccupancy[y][x] = seats[y][x];
@@ -163,6 +128,40 @@ public class SeatingArea {
       }
     }
     return occupied;
+  }
+
+  /**
+   * Updates the Seating Area by the Requirements of Task 2
+   *
+   * @return If the new Seat Occupation is different to the one before
+   */
+  public boolean updateSeatingAreaForTask2() {
+    char[][] newSeatOccupancy = new char[seats.length][seats[0].length];
+
+    for(int y = 0; y < seats.length; y++) {
+      for(int x = 0; x < seats[y].length; x++) {
+        if(seats[y][x] == FLOOR) {
+          newSeatOccupancy[y][x] = FLOOR;
+        } else {
+
+          int occupiedSurroundingSeats = getOccupiedSurroundingSeatsForTask2(x, y);
+
+          if(occupiedSurroundingSeats == 0) {
+            newSeatOccupancy[y][x] = OCCUPIED;
+          } else if(occupiedSurroundingSeats >= 5) {
+            newSeatOccupancy[y][x] = EMPTY;
+          } else {
+            newSeatOccupancy[y][x] = seats[y][x];
+          }
+        }
+      }
+    }
+
+    boolean different = !Arrays.deepEquals(seats, newSeatOccupancy);
+
+    seats = newSeatOccupancy;
+
+    return different;
   }
 
   /**

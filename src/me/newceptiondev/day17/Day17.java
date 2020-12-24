@@ -47,33 +47,6 @@ public class Day17 {
   }
 
   /**
-   * Task 2
-   *
-   * @param inputs List of String
-   *
-   * @return Count of Active Elements after 6 Steps
-   */
-  public int task2(final List<String> inputs) {
-    char[][][][] layers = new char[1][1][inputs.size()][inputs.get(0).length()];
-
-    for(int y = 0; y < inputs.size(); y++) {
-      layers[0][0][y] = inputs.get(y).toCharArray();
-    }
-
-    for(int i = 0; i < 6; i++) {
-      layers = calculateNextStateForTask2(layers);
-    }
-
-    int activeElements = 0;
-
-    for(char[][][] layer : layers) {
-      activeElements += countActiveElements(layer);
-    }
-
-    return activeElements;
-  }
-
-  /**
    * Calculates the next Step for a 3-Dimensional Array
    *
    * @param currentState Current Step
@@ -87,31 +60,6 @@ public class Day17 {
       for(int y = 0; y < newState[z].length; y++) {
         for(int x = 0; x < newState[z][y].length; x++) {
           newState[z][y][x] = calculateStateForElementForTask1(z, y, x, currentState);
-        }
-      }
-    }
-
-    return newState;
-  }
-
-  /**
-   * Calculates the next Step for a 4-Dimensional Array
-   *
-   * @param currentState Current Step
-   *
-   * @return Next Step
-   */
-  private char[][][][] calculateNextStateForTask2(final char[][][][] currentState) {
-    char[][][][] newState =
-        new char[currentState.length + 2][currentState[0].length + 2][currentState[0][0].length + 2][
-            currentState[0][0][0].length + 2];
-
-    for(int z = 0; z < newState.length; z++) {
-      for(int y = 0; y < newState[z].length; y++) {
-        for(int x = 0; x < newState[z][y].length; x++) {
-          for(int w = 0; w < newState[z][y][x].length; w++) {
-            newState[z][y][x][w] = calculateStateForElementForTask2(z, y, x, w, currentState);
-          }
         }
       }
     }
@@ -173,6 +121,80 @@ public class Day17 {
                                                   final int possibleX) {
     return possibleZ > 0 && possibleZ <= array.length && possibleY > 0 && possibleY <= array[possibleZ - 1].length &&
            possibleX > 0 && possibleX <= array[possibleZ - 1][possibleY - 1].length;
+  }
+
+  /**
+   * Task 2
+   *
+   * @param inputs List of String
+   *
+   * @return Count of Active Elements after 6 Steps
+   */
+  public int task2(final List<String> inputs) {
+    char[][][][] layers = new char[1][1][inputs.size()][inputs.get(0).length()];
+
+    for(int y = 0; y < inputs.size(); y++) {
+      layers[0][0][y] = inputs.get(y).toCharArray();
+    }
+
+    for(int i = 0; i < 6; i++) {
+      layers = calculateNextStateForTask2(layers);
+    }
+
+    int activeElements = 0;
+
+    for(char[][][] layer : layers) {
+      activeElements += countActiveElements(layer);
+    }
+
+    return activeElements;
+  }
+
+  /**
+   * Counts the active Elements within a 3-Dimensional Array
+   *
+   * @param layers Array
+   *
+   * @return Count of active Elements
+   */
+  private int countActiveElements(final char[][][] layers) {
+    int activeElements = 0;
+
+    for(char[][] layer : layers) {
+      for(char[] chars : layer) {
+        for(char aChar : chars) {
+          if(aChar == ACTIVE) {
+            activeElements++;
+          }
+        }
+      }
+    }
+    return activeElements;
+  }
+
+  /**
+   * Calculates the next Step for a 4-Dimensional Array
+   *
+   * @param currentState Current Step
+   *
+   * @return Next Step
+   */
+  private char[][][][] calculateNextStateForTask2(final char[][][][] currentState) {
+    char[][][][] newState =
+        new char[currentState.length + 2][currentState[0].length + 2][currentState[0][0].length + 2][
+            currentState[0][0][0].length + 2];
+
+    for(int z = 0; z < newState.length; z++) {
+      for(int y = 0; y < newState[z].length; y++) {
+        for(int x = 0; x < newState[z][y].length; x++) {
+          for(int w = 0; w < newState[z][y][x].length; w++) {
+            newState[z][y][x][w] = calculateStateForElementForTask2(z, y, x, w, currentState);
+          }
+        }
+      }
+    }
+
+    return newState;
   }
 
   /**
@@ -238,27 +260,5 @@ public class Day17 {
         possibleW > 0 && possibleW <= array[possibleZ - 1][possibleY - 1][possibleX - 1].length;
 
     return zIndexWithinArray && yIndexWithinArray && xIndexWithinArray && wIndexWithinArray;
-  }
-
-  /**
-   * Counts the active Elements within a 3-Dimensional Array
-   *
-   * @param layers Array
-   *
-   * @return Count of active Elements
-   */
-  private int countActiveElements(final char[][][] layers) {
-    int activeElements = 0;
-
-    for(char[][] layer : layers) {
-      for(char[] chars : layer) {
-        for(char aChar : chars) {
-          if(aChar == ACTIVE) {
-            activeElements++;
-          }
-        }
-      }
-    }
-    return activeElements;
   }
 }

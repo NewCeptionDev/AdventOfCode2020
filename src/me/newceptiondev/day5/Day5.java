@@ -73,25 +73,6 @@ public final class Day5 {
   }
 
   /**
-   * Returns all Missing Seats from the given Rows
-   *
-   * @param seatsPerRow Set of Seats
-   *
-   * @return Set of missing Seats
-   */
-  private Set<Seat> getMissingSeats(final Map<Integer, Set<Seat>> seatsPerRow) {
-    Set<Seat> missingSeats = new HashSet<>();
-
-    for(Integer row : seatsPerRow.keySet()) {
-      if(seatsPerRow.get(row).size() != 8) {
-        missingSeats.addAll(createMissingSeats(seatsPerRow.get(row)));
-      }
-    }
-
-    return missingSeats;
-  }
-
-  /**
    * Parses the Input to Seats
    *
    * @param inputs List of String
@@ -135,6 +116,25 @@ public final class Day5 {
     }
 
     return seatsByRow;
+  }
+
+  /**
+   * Returns all Missing Seats from the given Rows
+   *
+   * @param seatsPerRow Set of Seats
+   *
+   * @return Set of missing Seats
+   */
+  private Set<Seat> getMissingSeats(final Map<Integer, Set<Seat>> seatsPerRow) {
+    Set<Seat> missingSeats = new HashSet<>();
+
+    for(Integer row : seatsPerRow.keySet()) {
+      if(seatsPerRow.get(row).size() != 8) {
+        missingSeats.addAll(createMissingSeats(seatsPerRow.get(row)));
+      }
+    }
+
+    return missingSeats;
   }
 
   /**

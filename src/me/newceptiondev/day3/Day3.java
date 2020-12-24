@@ -69,6 +69,7 @@ public final class Day3 {
     //Run as long as the Bottom is not reached
     while(currentY < height) {
       //Calculates the next Positions - Takes the maximum Width of the Input, into account
+      //Calculates the next Positions - Takes the maximum Width of the Input, into account
       int nextX = currentX + horizontalMovement < partWidth ? currentX + horizontalMovement
                                                             : currentX + horizontalMovement - partWidth;
       int nextY = currentY + verticalMovement;

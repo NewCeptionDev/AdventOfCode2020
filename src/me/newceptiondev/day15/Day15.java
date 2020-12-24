@@ -46,29 +46,6 @@ public final class Day15 {
   }
 
   /**
-   * Task 2
-   *
-   * @param inputs List of Integer
-   *
-   * @return Number that is spoken at Position SEARCHED_INDEX_TASK2
-   */
-  public int task2(List<Integer> inputs) {
-    Map<Integer, Tuple<Integer, Integer>> numberAndLastIndices = createMapWithStartingNumbers(inputs);
-
-    int index = inputs.size();
-    int currentNumber = 0;
-
-    while(index < SEARCHED_INDEX_TASK2) {
-      currentNumber = calculateNextNumber(currentNumber, numberAndLastIndices);
-      updateNumberAndLastIndexMap(numberAndLastIndices, index, currentNumber);
-
-      index++;
-    }
-
-    return currentNumber;
-  }
-
-  /**
    * Creates a Map for the StartingNumbers
    *
    * @param inputs List of Integer
@@ -117,6 +94,29 @@ public final class Day15 {
     } else {
       numberAndLastIndices.put(currentNumber, new Tuple<>(index, null));
     }
+  }
+
+  /**
+   * Task 2
+   *
+   * @param inputs List of Integer
+   *
+   * @return Number that is spoken at Position SEARCHED_INDEX_TASK2
+   */
+  public int task2(List<Integer> inputs) {
+    Map<Integer, Tuple<Integer, Integer>> numberAndLastIndices = createMapWithStartingNumbers(inputs);
+
+    int index = inputs.size();
+    int currentNumber = 0;
+
+    while(index < SEARCHED_INDEX_TASK2) {
+      currentNumber = calculateNextNumber(currentNumber, numberAndLastIndices);
+      updateNumberAndLastIndexMap(numberAndLastIndices, index, currentNumber);
+
+      index++;
+    }
+
+    return currentNumber;
   }
 
 }

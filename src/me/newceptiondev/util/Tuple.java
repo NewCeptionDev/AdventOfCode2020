@@ -5,9 +5,14 @@ public class Tuple<T, F> {
     private final T x;
     private final F y;
 
-    public Tuple(T x, F y){
+    public Tuple(T x, F y) {
         this.x = x;
         this.y = y;
+    }
+
+    @Override
+    public String toString() {
+        return "Tuple{" + "x=" + x + ", y=" + y + '}';
     }
 
     public T getX() {
@@ -16,13 +21,5 @@ public class Tuple<T, F> {
 
     public F getY() {
         return y;
-    }
-
-    @Override
-    public String toString() {
-        return "Tuple{" +
-                "x=" + x +
-                ", y=" + y +
-                '}';
     }
 }

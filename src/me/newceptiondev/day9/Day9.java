@@ -52,6 +52,27 @@ public final class Day9 {
   }
 
   /**
+   * Tries to find two Numbers that add up to the given Sum
+   *
+   * @param sum           Number that should be the Result of an Addition
+   * @param possibleTerms Possible Terms of the Sum
+   *
+   * @return Tuple containing both Terms of the Sum
+   */
+  private Tuple<Long, Long> findTermsOfSum(final Long sum, final Set<Long> possibleTerms) {
+
+    for(Long summand : possibleTerms) {
+      Long neededSecondSummand = sum - summand;
+
+      if(!summand.equals(neededSecondSummand) && possibleTerms.contains(neededSecondSummand)) {
+        return new Tuple<>(summand, neededSecondSummand);
+      }
+    }
+
+    return null;
+  }
+
+  /**
    * Task 2
    *
    * @param inputs List of String
@@ -76,27 +97,6 @@ public final class Day9 {
 
     System.err.println("There was no Set which Sum was equal to the invalid Number");
     return -1;
-  }
-
-  /**
-   * Tries to find two Numbers that add up to the given Sum
-   *
-   * @param sum           Number that should be the Result of an Addition
-   * @param possibleTerms Possible Terms of the Sum
-   *
-   * @return Tuple containing both Terms of the Sum
-   */
-  private Tuple<Long, Long> findTermsOfSum(final Long sum, final Set<Long> possibleTerms) {
-
-    for(Long summand : possibleTerms) {
-      Long neededSecondSummand = sum - summand;
-
-      if(!summand.equals(neededSecondSummand) && possibleTerms.contains(neededSecondSummand)) {
-        return new Tuple<>(summand, neededSecondSummand);
-      }
-    }
-
-    return null;
   }
 
   /**

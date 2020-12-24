@@ -44,10 +44,6 @@ public class Rule {
         return subRules;
     }
 
-    public int getId() {
-        return id;
-    }
-
     public String buildRegex(Map<Integer, Rule> rules) {
 
         if(subRules.isEmpty()) {
@@ -90,5 +86,9 @@ public class Rule {
         builder.append(")");
 
         return builder.toString();
+    }
+
+    public int getId() {
+        return id;
     }
 }

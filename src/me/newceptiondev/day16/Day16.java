@@ -51,16 +51,6 @@ public final class Day16 {
     }
 
     /**
-     * Task 2
-     *
-     * @param inputs List of String
-     * @return
-     */
-    public int task2(List<String> inputs) {
-        return 0;
-    }
-
-    /**
      * Parses the Input
      *
      * @param inputs        List of String
@@ -81,14 +71,25 @@ public final class Day16 {
                 if (!input.equals("your ticket:")) {
                     myTicket = new Ticket(input);
                 }
-            } else if (emptyRows == 2) {
-                if (!input.equals("nearby tickets:")) {
-                    nearbyTickets.add(new Ticket(input));
-                }
+            } else if(emptyRows == 2) {
+              if(!input.equals("nearby tickets:")) {
+                nearbyTickets.add(new Ticket(input));
+              }
             }
         }
 
-        return myTicket;
+      return myTicket;
     }
+
+  /**
+   * Task 2
+   *
+   * @param inputs List of String
+   *
+   * @return
+   */
+  public int task2(List<String> inputs) {
+    return 0;
+  }
 
 }
