@@ -11,7 +11,7 @@ public class FileUtil {
   /**
    * Reads a Textfile from the Inputs Folder with the given Name
    *
-   * @param filename Name of File
+   * @param filename Filename
    *
    * @return List of all Lines
    */

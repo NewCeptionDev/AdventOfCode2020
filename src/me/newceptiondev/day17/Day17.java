@@ -77,6 +77,7 @@ public class Day17 {
    *
    * @return Char representing State of Element
    */
+  @SuppressWarnings("OverlyComplexMethod")
   private char calculateStateForElementForTask1(final int zIndex, final int yIndex, final int xIndex,
                                                 final char[][][] lastState) {
     int activeNeighbours = 0;
@@ -200,26 +201,28 @@ public class Day17 {
   /**
    * Calculates the next State for an Element within a 4-Dimensional Array
    *
-   * @param z         Z-Index
-   * @param y         Y-Index
-   * @param x         X-Index
-   * @param w         W-Index
+   * @param zIndex    Z-Index
+   * @param yIndex    Y-Index
+   * @param xIndex    X-Index
+   * @param wIndex    W-Index
    * @param lastState Last State
    *
    * @return Char representing State of Element
    */
-  private char calculateStateForElementForTask2(final int z, final int y, final int x, final int w,
+  @SuppressWarnings({"OverlyComplexMethod", "OverlyNestedMethod"})
+  private char calculateStateForElementForTask2(final int zIndex, final int yIndex, final int xIndex, final int wIndex,
                                                 final char[][][][] lastState) {
     int activeNeighbours = 0;
     char lastStateOfElement = '.';
 
-    for(int possibleZ = z - 1; possibleZ <= z + 1; possibleZ++) {
-      for(int possibleY = y - 1; possibleY <= y + 1; possibleY++) {
-        for(int possibleX = x - 1; possibleX <= x + 1; possibleX++) {
-          for(int possibleW = w - 1; possibleW <= w + 1; possibleW++) {
+    for(int possibleZ = zIndex - 1; possibleZ <= zIndex + 1; possibleZ++) {
+      for(int possibleY = yIndex - 1; possibleY <= yIndex + 1; possibleY++) {
+        for(int possibleX = xIndex - 1; possibleX <= xIndex + 1; possibleX++) {
+          for(int possibleW = wIndex - 1; possibleW <= wIndex + 1; possibleW++) {
             if(isPossiblePositionWithin4DArray(lastState, possibleZ, possibleY, possibleX, possibleW) &&
                lastState[possibleZ - 1][possibleY - 1][possibleX - 1][possibleW - 1] == ACTIVE) {
-              final boolean isNeighbourPosition = possibleZ != z || possibleY != y || possibleX != x || possibleW != w;
+              final boolean isNeighbourPosition =
+                  possibleZ != zIndex || possibleY != yIndex || possibleX != xIndex || possibleW != wIndex;
               if(isNeighbourPosition) {
                 activeNeighbours++;
               } else {
