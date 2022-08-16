@@ -1,15 +1,41 @@
 # Advent of Code 2020
-This Repository contains my Solutions for all Days of Advent of Code 2020.
-I don't aim to make the Leaderboard, but create **solid**, **well-designed** and **simple** Solutions.
 
-All Solutions contain **Comments** and try to follow the **Clean Code** Approach.
+This repo contains all of my Solutions for the [Advent of Code 2020](https://adventofcode.com/2020) Challenges.
 
-The Programming Language used is ***Java***.
+## Installation
+
+Clone the repo and go to the created folder:
+
+```
+git clone https://github.com/NewCeptionDev/AdventOfCode2020.git
+```
+
+```
+cd AdventOfCode2020
+```
+
+Dependencies:
+
+```
+Java 18
+``` 
 
 
+## Run
+Add an input file to the inputs folder and copy your input to that file.<br>
+Make sure that the ***FILE_NAME*** within the corresponding class matches the name of the input file.<br>
+Afterwards start the program using the `main` method in the corresponding class
 
-## Run locally
 
-You need to check out the Repository and add your Input as a *.txt* to the *Inputs*-Folder.
-After that edit the ***fileName*** Variable in the Day you want to run and use the *main* Method within that Day to run it.
-Your Outputs should be printed to the Console.
+## Languages used:
+
+- Java
+
+<br>
+
+## Repositories for other years of Advent of Code
+I have participated in multiple years of Advent of Code, using multiple languages.<br>
+You can find all of my solution repositories [here](https://github.com/NewCeptionDev?tab=repositories&q=AdventOfCode&type=&language=&sort=name).
+
+<br>
+<br>

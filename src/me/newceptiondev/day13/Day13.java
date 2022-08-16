@@ -5,6 +5,7 @@ import me.newceptiondev.util.Tuple;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Day13 {
@@ -81,46 +82,26 @@ public class Day13 {
   public Long task2(List<String> inputs) {
     List<Integer> busIds = parseBusIds(inputs.get(1));
 
-    int highestNumber = findHighestInteger(busIds);
-
     List<Tuple<Integer, Integer>> idsWithIndex =
         busIds.stream().map(integer -> new Tuple<>(integer, busIds.indexOf(integer)))
               .filter(integerIntegerTuple -> integerIntegerTuple.getX() != null).collect(Collectors.toList());
 
-    Long timestamp = null;
-    long currentMultiplier = 100000000000000L / highestNumber;
+    long additive = idsWithIndex.get(0).getX();
+    long lowestMatchingTimestamp = idsWithIndex.get(0).getX();
 
-    while(timestamp == null) {
-      long possibleTimestamp = (highestNumber * currentMultiplier) - busIds.indexOf(highestNumber);
+    for(int i = 1; i < idsWithIndex.size(); i++) {
+      List<Tuple<Integer, Integer>> currentSublist = idsWithIndex.subList(0, i + 1);
 
-      boolean valid = true;
-
-      for(int i = 0; i < idsWithIndex.size() && valid; i++) {
-        valid = possibleTimestamp % idsWithIndex.get(i).getX() ==
-                (idsWithIndex.get(i).getX() - idsWithIndex.get(i).getY()) % idsWithIndex.get(i).getX();
+      while(!allBusMatch(currentSublist, lowestMatchingTimestamp)) {
+          lowestMatchingTimestamp += additive;
       }
-
-      if(valid) {
-        timestamp = possibleTimestamp;
-      }
-
-      currentMultiplier++;
+      additive = currentSublist.stream().map(Tuple::getX).map(elem -> (long) elem).reduce(1L, (l1, l2) -> l1 * l2);
     }
 
-    return timestamp;
+    return lowestMatchingTimestamp;
   }
 
-  private Integer findHighestInteger(List<Integer> input) {
-    Integer highestInteger = null;
-
-    for(Integer integer : input) {
-      if(integer != null) {
-        if(highestInteger == null || highestInteger < integer) {
-          highestInteger = integer;
-        }
-      }
-    }
-
-    return highestInteger;
+  private boolean allBusMatch(List<Tuple<Integer, Integer>> busIds, long toCheck) {
+    return busIds.stream().allMatch(elem -> (toCheck + elem.getY()) % elem.getX() == 0);
   }
 }
