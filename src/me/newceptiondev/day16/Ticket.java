@@ -44,4 +44,12 @@ public class Ticket {
 
     return invalidValues;
   }
+
+  public int getValueAtPosition(int position) {
+    return position >= 0 && position < values.size() ? values.get(position) : -1;
+  }
+
+  public int getValueCount() {
+    return values.size();
+  }
 }

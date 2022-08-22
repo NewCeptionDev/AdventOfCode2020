@@ -40,4 +40,8 @@ public class TicketField {
 
     return isValid;
   }
+
+  public String getName() {
+    return name;
+  }
 }
