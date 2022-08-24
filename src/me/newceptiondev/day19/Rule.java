@@ -4,8 +4,10 @@ import java.util.*;
 
 public class Rule {
 
+    public static int namingID = 0;
+
     private final int id;
-    private Set<List<Integer>> subRules = new HashSet<>();
+    public Set<List<Integer>> subRules = new HashSet<>();
     private char literal;
 
     public Rule(String description) {
@@ -65,10 +67,33 @@ public class Rule {
                     builder.append(")+");
                 } else {
                     builder.append("(");
-                    for(Integer rule : subRule) {
-                        if(rule != id) {
-                            builder.append("(").append(rules.get(rule).buildRegex(rules)).append(")+");
+                    StringBuilder beforeRegex = new StringBuilder();
+                    StringBuilder afterRegex = new StringBuilder();
+                    for(int i = 0; i < subRule.size(); i++) {
+                        if(i != subRule.indexOf(id)) {
+                            String buildRegex = rules.get(subRule.get(i)).buildRegex(rules);
+
+                            if(subRule.indexOf(id) > i) {
+                                beforeRegex.append("(").append(buildRegex).append(")");
+                            } else {
+                                afterRegex.append("(").append(buildRegex).append(")");
+                            }
                         }
+                    }
+
+                    // Guessing there will be no more repetition than 10 times
+                    for(int i = 0; i < 10; i++) {
+                        if(i > 1) {
+                            builder.append("|");
+                        }
+                        builder.append("(");
+                        for(int j = 0; j < i; j++) {
+                            builder.append(beforeRegex);
+                        }
+                        for(int j = 0; j < i; j++) {
+                            builder.append(afterRegex);
+                        }
+                        builder.append(")");
                     }
                     builder.append(")");
                 }
@@ -90,5 +115,10 @@ public class Rule {
 
     public int getId() {
         return id;
+    }
+
+    public static int getNextNamingID() {
+        namingID++;
+        return namingID;
     }
 }
