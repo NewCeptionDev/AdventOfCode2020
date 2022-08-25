@@ -44,15 +44,53 @@ public class Day23 {
      */
     public long task2(final String input) {
         List<Integer> circle = parseCups(input);
-        circle.addAll(fillCircle(circle));
-        int currentCup = circle.get(0);
+        int max = 1000000;
 
-        for(int i = 0; i < 10000000; i++){
-            doMove(circle, currentCup);
-            currentCup = circle.indexOf(currentCup) < circle.size() - 1 ? circle.get(circle.indexOf(currentCup) + 1) : circle.get(0);
+        Cup[] cupMap = new Cup[max + 1];
+
+        Cup head = new Cup(circle.get(0));
+        cupMap[head.value] = head;
+        Cup tail = head;
+
+        for(int i = 1; i < circle.size(); i++) {
+            Cup c = new Cup(circle.get(i));
+            cupMap[c.value] = c;
+            c.next = head;
+            tail.next = c;
+            tail = c;
         }
 
-        return multiplyTwoCupsBehind1(circle);
+        for(int i = Collections.max(circle) + 1; i <= max; i++) {
+            Cup c = new Cup(i);
+            cupMap[c.value] = c;
+            c.next = head;
+            tail.next = c;
+            tail = c;
+        }
+
+        for(int i = 0; i < 10000000; i++) {
+            Cup current = head;
+            Cup c1 = current.next;
+            Cup c3 = c1.next.next;
+
+            head.next = c3.next;
+
+            int targetIndex = current.value == 1 ? max : current.value - 1;
+            while(targetIndex == c1.value || targetIndex == c1.next.value || targetIndex == c3.value) {
+                targetIndex--;
+                targetIndex = targetIndex < 1 ? max : targetIndex;
+            }
+
+            Cup target = cupMap[targetIndex];
+
+            c3.next = target.next;
+            target.next = c1;
+            tail = c3;
+            head = current.next;
+        }
+
+        Cup one = cupMap[1];
+        return (long)one.next.value * one.next.next.value;
     }
 
     private List<Integer> parseCups(String input){
@@ -120,34 +158,5 @@ public class Day23 {
         }
 
         return result.toString();
-    }
-
-    private Collection<Integer> fillCircle(List<Integer> currentCircle) {
-        int highestNumber = currentCircle.stream().max(Integer::compareTo).get();
-
-        List<Integer> toAdd = new ArrayList<>();
-
-        for(int i = highestNumber + 1; i <= 1000000; i++) {
-            toAdd.add(highestNumber);
-        }
-
-        return toAdd;
-    }
-
-    private long multiplyTwoCupsBehind1(List<Integer> circle) {
-        Iterator<Integer> iterator = circle.listIterator(circle.indexOf(1));
-        iterator.next();
-
-        long result = 1;
-
-        for(int i = 0; i < 2; i++){
-            if(!iterator.hasNext()){
-                iterator = circle.listIterator();
-            }
-
-            result *= iterator.next();
-        }
-
-        return result;
     }
 }
